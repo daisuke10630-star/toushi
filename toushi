@@ -1,0 +1,7 @@
+cd C:\Users\daisuke\Desktop\stock-analyzer
+git init
+git add .
+git commit -m "初回コミット"
+git branch -M main
+git remote add origin https://github.com/daisuke10630-star/toushi.git
+git push -u origin main
