@@ -407,7 +407,11 @@ def run(df: pd.DataFrame, tf: TimeframeParams, star_threshold: int) -> BacktestR
         "pullback": "エントリー目安まで押したら指値で約定",
     }.get(config.ENTRY_MODE, config.ENTRY_MODE)
     kind, value = config.stop_spec(tf.key)
-    stop_desc = f"ATR×{value:g}" if kind == "atr" else f"{value:.2%}下"
+    stop_desc = {
+        "atr": f"ATR×{value:g}下（固定）",
+        "trail_atr": f"高値からATR×{value:g}下を追いかける（トレーリング）",
+        "trail_pct": f"高値から{value:.2%}下を追いかける（トレーリング）",
+    }.get(kind, f"{value:.2%}下（固定）")
     method = (
         f"★{star_threshold}以上のシグナル発生後、{horizon}以内に{entry_desc}。"
         f"損切り（{stop_desc}）と利確目標①のどちらに先に触れたかで判定し、"

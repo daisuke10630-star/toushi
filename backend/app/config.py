@@ -148,10 +148,25 @@ STOP_ATR_MULTIPLE = 2.0
 
 
 def stop_spec(timeframe_key: str) -> tuple:
-    """backtest / optimize が使う損切り指定を返す。"""
-    if STOP_MODE == "atr":
-        return ("atr", STOP_ATR_MULTIPLE)
+    """backtest / optimize が使う損切り指定を返す。
+
+    STOP_MODE をそのまま指定に反映する。ここで取りこぼすと、検証した設定と
+    実際に動く設定が食い違う（過去に trail_atr を pct 8% に落としていた不具合あり）。
+    """
+    if STOP_MODE in ("atr", "trail_atr"):
+        return (STOP_MODE, STOP_ATR_MULTIPLE)
+    if STOP_MODE == "trail_pct":
+        return ("trail_pct", stop_loss_pct(timeframe_key))
     return ("pct", stop_loss_pct(timeframe_key))
+
+
+def uses_atr_stop() -> bool:
+    """損切り幅をATRで決める設定か（固定・トレーリングの両方を含む）。"""
+    return STOP_MODE in ("atr", "trail_atr")
+
+
+def is_trailing() -> bool:
+    return STOP_MODE.startswith("trail")
 
 # --- 売買コスト ---
 # 往復（買い＋売り）でかかるコストの合計。手数料・スプレッド・約定滑りを含む。

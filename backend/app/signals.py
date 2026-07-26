@@ -199,17 +199,18 @@ def generate_signal(
     basis = result.entry_price if result.entry_price is not None else float(price)
     atr = latest.get("ATR")
     use_atr = (
-        stop_pct is None
-        and config.STOP_MODE == "atr"
-        and pd.notna(atr)
-        and float(atr) > 0
+        stop_pct is None and config.uses_atr_stop() and pd.notna(atr) and float(atr) > 0
     )
     if use_atr:
         mult = config.STOP_ATR_MULTIPLE
         result.stop_loss = round(basis - mult * float(atr), 1)
+        trail_note = (
+            "。高値を更新するたびに切り上がります（トレーリング）"
+            if config.is_trailing()
+            else "。値動きの荒い銘柄ほど損切りを広く取ります"
+        )
         result.stop_loss_note = (
-            f"ATR（{tf.atr_period}本の平均値幅 {float(atr):,.1f}円）の{mult:g}倍下。"
-            f"値動きの荒い銘柄ほど損切りを広く取ります"
+            f"ATR（{tf.atr_period}本の平均値幅 {float(atr):,.1f}円）の{mult:g}倍下{trail_note}"
         )
     else:
         pct = stop_pct if stop_pct is not None else config.stop_loss_pct(tf.key)
