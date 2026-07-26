@@ -25,6 +25,11 @@
 - 板の厚さ（提示価格で必ず約定する前提）
 - 同一銘柄の直近データのみでの検証（他銘柄・他期間への一般化は保証されない）
 """
+# 型注釈を文字列として遅延評価する。
+# Python 3.14 では既定でこの挙動だが、3.12 以下では定義順に依存してしまうため明示する
+# （_find_fill が SignalEvent より前に定義されており、これがないと NameError になる）。
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 
 import pandas as pd
