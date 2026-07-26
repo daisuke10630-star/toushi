@@ -1,0 +1,161 @@
+"""
+日次レポートの生成。サーバーを起動せずに単体で実行できる。
+
+GitHub Actions のような「PCが起動していない環境」でも動かせるよう、
+HTTP API を経由せず app モジュールを直接呼び出します。
+
+■ 「最もシグナルが強い銘柄」について
+**「推奨銘柄」という言葉は使いません。** 検証の結果、★にも本ルールにも
+「上がる銘柄を当てる力」は確認できていません。ここで出すのは
+「今日いちばん条件が揃っている銘柄」という機械的なランキングです。
+"""
+import asyncio
+from dataclasses import dataclass, field
+from datetime import datetime
+
+import pandas as pd
+import yfinance as yf
+
+from . import backtest, config, features, indicators, sectors, signals, timeframes, universe
+from .screener import _extract
+from .yfinance_client import normalize, to_symbol
+
+
+@dataclass
+class Candidate:
+    code: str
+    name: str
+    sector: str
+    price: float
+    change_pct: float
+    stars: int
+    judgement: str
+    entry_price: float | None
+    stop_loss: float | None
+    take_profit_1: float | None
+    entry_gap_pct: float | None
+    reasons: list[str] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
+    edge: float | None = None
+    confidence_label: str = ""
+
+
+def _download(codes: list[str], tf) -> dict[str, pd.DataFrame]:
+    frames: dict[str, pd.DataFrame] = {}
+    symbols = [to_symbol(c) for c in codes]
+    for i in range(0, len(symbols), config.SCREEN_BATCH_SIZE):
+        chunk = symbols[i : i + config.SCREEN_BATCH_SIZE]
+        try:
+            batch = yf.download(
+                chunk, period=tf.yf_period, interval=tf.yf_interval,
+                group_by="ticker", auto_adjust=True, threads=True, progress=False,
+            )
+        except Exception:
+            continue
+        for sym in chunk:
+            sub = _extract(batch, sym)
+            if sub is None:
+                continue
+            try:
+                df = normalize(sub, tf, sym)
+                if len(df) >= max(tf.ma_periods.values()) + 20:
+                    frames[sym.replace(".T", "")] = df
+            except Exception:
+                continue
+    return frames
+
+
+def build(tf=None, with_backtest: bool = True) -> dict:
+    """母集団全体を分析し、レポート用のデータをまとめて返す。"""
+    tf = tf or timeframes.get(timeframes.DEFAULT_KEY)
+    codes = universe.codes()
+    raw = _download(codes, tf)
+
+    market = None
+    try:
+        market = normalize(
+            yf.Ticker(features.MARKET_SYMBOL).history(
+                period=tf.yf_period, interval=tf.yf_interval, auto_adjust=True
+            ),
+            tf, features.MARKET_SYMBOL,
+        )
+    except Exception:
+        pass
+
+    by_sector: dict[str, dict[str, pd.DataFrame]] = {}
+    for code, df in raw.items():
+        sec = sectors.get(code)
+        if sec != "unknown":
+            by_sector.setdefault(sec, {})[code] = df
+    sector_index = {
+        s: features.build_sector_average(m) for s, m in by_sector.items() if len(m) >= 3
+    }
+
+    names = {w["code"]: w["name"] for w in config.WATCHLIST}
+    buys: list[Candidate] = []
+    sells: list[Candidate] = []
+
+    for code, df in raw.items():
+        try:
+            d = indicators.compute_all(df, tf)
+            d = features.compute_all(d, market=market, peers=sector_index.get(sectors.get(code)))
+            sig = signals.generate_signal(d, tf)
+            latest = d.iloc[-1]
+            price = float(latest["close"])
+            prev = float(d.iloc[-2]["close"]) if len(d) >= 2 else price
+            gap = ((sig.entry_price / price - 1) * 100) if sig.entry_price and price else None
+
+            cand = Candidate(
+                code=code,
+                name=names.get(code, code),
+                sector=sectors.get(code),
+                price=round(price, 1),
+                change_pct=round((price / prev - 1) * 100, 2) if prev else 0.0,
+                stars=sig.stars,
+                judgement=sig.judgement,
+                entry_price=sig.entry_price,
+                stop_loss=sig.stop_loss,
+                take_profit_1=sig.take_profit_1,
+                entry_gap_pct=round(gap, 2) if gap is not None else None,
+                reasons=sig.reasons,
+                warnings=sig.warnings,
+            )
+
+            if sig.stars >= 4:
+                buys.append((cand, d))
+            if sig.stars <= 2 or "売り" in sig.judgement:
+                sells.append(cand)
+        except Exception:
+            continue
+
+    # 買い候補は「条件が揃っていて、かつエントリーまでの距離が近い」順
+    buys.sort(key=lambda x: (-x[0].stars, abs(x[0].entry_gap_pct or 999)))
+    top_buys = buys[:10]
+
+    # 上位だけバックテスト（重いので）
+    if with_backtest:
+        for cand, d in top_buys:
+            try:
+                r = backtest.run(d, tf, cand.stars)
+                cand.edge = r.edge
+                cand.confidence_label = r.label
+            except Exception:
+                pass
+
+    sells.sort(key=lambda c: (c.stars, c.change_pct))
+
+    return {
+        "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "data_date": max(
+            (df["date"].iloc[-1] for df in raw.values()), default=None
+        ),
+        "universe_size": len(codes),
+        "analyzed": len(raw),
+        "timeframe": tf,
+        "top_buys": [c for c, _ in top_buys],
+        "top_sells": sells[:10],
+    }
+
+
+async def build_async(tf=None, with_backtest: bool = True) -> dict:
+    return await asyncio.to_thread(build, tf, with_backtest)

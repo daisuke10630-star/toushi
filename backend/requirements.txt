@@ -1,0 +1,10 @@
+# Python 3.9〜3.14 で動くようバージョンは下限指定にしています。
+# 特定バージョンに固定したい場合は `pip freeze > requirements.lock.txt` を利用してください。
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.6
+httpx>=0.27.2
+pandas>=2.2.2
+numpy>=1.26.4
+python-dotenv>=1.0.1
+pydantic>=2.9.2
+yfinance>=1.5.2

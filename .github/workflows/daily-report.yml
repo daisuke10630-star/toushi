@@ -1,0 +1,54 @@
+name: 日次レポートの生成と公開
+
+# GitHub Actions の無料枠で動きます（パブリックリポジトリなら実行時間は無制限）。
+# 自分のPCが起動していなくても実行されます。
+on:
+  schedule:
+    # 東証の大引け（15:30 JST）から十分に間を置いた 20:30 JST に実行。
+    # cron は UTC なので 11:30 UTC を指定する。
+    - cron: "30 11 * * 1-5"
+  # 手動実行もできるようにしておく（設定を変えた直後の確認用）
+  workflow_dispatch:
+
+# GitHub Pages への公開に必要な権限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 実行が重なった場合は新しい方を優先する
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: 依存パッケージのインストール
+        run: pip install -r backend/requirements.txt
+
+      - name: レポート生成
+        # --with-positions は付けない。保有銘柄・取得単価が公開ページに載るため。
+        run: python scripts/build_site.py
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

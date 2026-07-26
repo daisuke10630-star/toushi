@@ -1,0 +1,20 @@
+# === 個人情報：絶対に公開しないこと ===
+# 保有銘柄・取得単価・株数が入っています
+backend/positions.json
+# 保有ポジションを含めて生成したレポート
+dashboard-snapshot.html
+
+# 環境変数（APIキー等）
+backend/.env
+
+# Python
+backend/venv/
+__pycache__/
+*.pyc
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# 生成物（GitHub Actions が作り直すのでコミット不要）
+docs/
