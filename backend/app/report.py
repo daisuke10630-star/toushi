@@ -10,6 +10,7 @@ HTTP API を経由せず app モジュールを直接呼び出します。
 「今日いちばん条件が揃っている銘柄」という機械的なランキングです。
 """
 import asyncio
+import dataclasses
 from dataclasses import dataclass, field
 from datetime import datetime
 
@@ -78,7 +79,10 @@ def _download(codes: list[str], tf) -> dict[str, pd.DataFrame]:
 
 def build(tf=None, with_backtest: bool = True) -> dict:
     """母集団全体を分析し、レポート用のデータをまとめて返す。"""
-    tf = tf or timeframes.get(timeframes.DEFAULT_KEY)
+    base = tf or timeframes.get(timeframes.DEFAULT_KEY)
+    # 過去分布のサンプル数を確保するため、レポートでは長めの履歴を取る。
+    # 判定自体は直近の値しか見ないので、結果は変わらず統計だけが厚くなる。
+    tf = dataclasses.replace(base, yf_period="5y", bars=1300)
     codes = universe.codes()
     raw = _download(codes, tf)
 
@@ -145,6 +149,14 @@ def build(tf=None, with_backtest: bool = True) -> dict:
 
     # 上位だけバックテストとシグナル条件付きの分布を計算（どちらも重いので）
     for cand, d in top_buys:
+        # ウォッチリスト外の銘柄は名前が未解決なので、上位だけ問い合わせる
+        if cand.name == cand.code:
+            try:
+                from .screener import _resolve_name
+
+                cand.name = _resolve_name(cand.code)
+            except Exception:
+                pass
         if with_backtest:
             try:
                 r = backtest.run(d, tf, cand.stars)
