@@ -29,7 +29,7 @@ from . import (
     universe,
 )
 from .screener import _extract
-from .yfinance_client import normalize, to_symbol
+from .yfinance_client import fill_last_close, normalize, to_symbol
 
 
 @dataclass
@@ -67,11 +67,33 @@ def _download(codes: list[str], tf) -> dict[str, pd.DataFrame]:
             )
         except Exception:
             continue
+
+        # 大引け直後は終値だけ未確定のことがある。始値・高値・安値を拾うため
+        # 調整前の直近数日も取っておく（必要な銘柄だけ補完に使う）
+        unadj = None
+        try:
+            if any(
+                (sub := _extract(batch, s)) is not None
+                and not sub.empty
+                and pd.isna(sub["Close"].iloc[-1])
+                for s in chunk
+            ):
+                unadj = yf.download(
+                    chunk, period="5d", interval=tf.yf_interval,
+                    group_by="ticker", auto_adjust=False, threads=True, progress=False,
+                )
+        except Exception:
+            unadj = None
+
         for sym in chunk:
             sub = _extract(batch, sym)
             if sub is None:
                 continue
             try:
+                if pd.isna(sub["Close"].iloc[-1]):
+                    sub = fill_last_close(
+                        sub, _extract(unadj, sym) if unadj is not None else None, sym
+                    )
                 df = normalize(sub, tf, sym)
                 if len(df) >= max(tf.ma_periods.values()) + 20:
                     frames[sym.replace(".T", "")] = df

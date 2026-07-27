@@ -13,6 +13,7 @@ J-Quantsの無料プランが約12週間の配信遅延を持つのに対し、�
 どの時間軸でも同一です。indicators.py 以降は時間軸を意識せず処理できます。
 """
 import asyncio
+from datetime import date, datetime, timedelta, timezone
 
 import pandas as pd
 import yfinance as yf
@@ -29,6 +30,64 @@ def to_symbol(code: str) -> str:
     if "." in code:  # 既に "8136.T" 形式で渡された場合はそのまま使う
         return code
     return f"{code}.T"
+
+
+JST = timezone(timedelta(hours=9))
+# 東証の大引け（15:30）から、この時間だけ待って「確定」とみなす
+CLOSE_SETTLED_HOUR = 16
+
+
+def _session_finished(bar_date: date) -> bool:
+    """その営業日の取引が終わっているか（＝現在値を終値とみなしてよいか）。"""
+    now = datetime.now(JST)
+    if bar_date < now.date():
+        return True
+    return bar_date == now.date() and now.hour >= CLOSE_SETTLED_HOUR
+
+
+def fill_last_close(
+    adjusted: pd.DataFrame, unadjusted: pd.DataFrame | None, symbol: str
+) -> pd.DataFrame:
+    """最終行の終値が未確定なとき、確定値を取ってきて補う。
+
+    Yahooは大引け後しばらく、日足の終値だけを空のまま返すことがある
+    （始値・高値・安値・出来高は入っている）。auto_adjust=True では終値が
+    欠けると全列がNaNになり、そのまま捨てると1営業日分データが古くなる。
+
+    直近のバーには将来の分割・配当調整が効かないため、
+    調整前の始値・高値・安値をそのまま使ってよい。
+    """
+    if adjusted is None or adjusted.empty:
+        return adjusted
+    if pd.notna(adjusted["Close"].iloc[-1]):
+        return adjusted
+
+    stamp = adjusted.index[-1]
+    bar_date = stamp.date() if hasattr(stamp, "date") else None
+    if bar_date is None or not _session_finished(bar_date):
+        return adjusted
+
+    try:
+        price = yf.Ticker(symbol).fast_info.get("lastPrice")
+    except Exception:
+        return adjusted
+    if not price or price <= 0:
+        return adjusted
+
+    out = adjusted.copy()
+    out.loc[stamp, "Close"] = float(price)
+    for col in ("Open", "High", "Low"):
+        if pd.isna(out[col].iloc[-1]) and unadjusted is not None and not unadjusted.empty:
+            try:
+                v = unadjusted.loc[stamp, col]
+                if pd.notna(v):
+                    out.loc[stamp, col] = float(v)
+            except (KeyError, TypeError):
+                pass
+        # それでも埋まらなければ終値で代用する（値幅0の足として扱う）
+        if pd.isna(out[col].iloc[-1]):
+            out.loc[stamp, col] = float(price)
+    return out
 
 
 def normalize(raw: pd.DataFrame, tf: TimeframeParams, label: str) -> pd.DataFrame:
@@ -68,9 +127,14 @@ def normalize(raw: pd.DataFrame, tf: TimeframeParams, label: str) -> pd.DataFram
 
 
 def _fetch_sync(symbol: str, tf: TimeframeParams) -> pd.DataFrame:
-    raw = yf.Ticker(symbol).history(
-        period=tf.yf_period, interval=tf.yf_interval, auto_adjust=True
-    )
+    ticker = yf.Ticker(symbol)
+    raw = ticker.history(period=tf.yf_period, interval=tf.yf_interval, auto_adjust=True)
+    if not raw.empty and pd.isna(raw["Close"].iloc[-1]):
+        try:
+            unadj = ticker.history(period="5d", interval=tf.yf_interval, auto_adjust=False)
+        except Exception:
+            unadj = None
+        raw = fill_last_close(raw, unadj, symbol)
     if raw.empty:
         raise DataSourceFetchError(
             f"銘柄 {symbol} の{tf.label}データが取得できませんでした。"
