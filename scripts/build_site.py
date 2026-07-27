@@ -18,6 +18,9 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "backend"))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+
+import calculator  # noqa: E402  （scripts/ 直下）
 
 from app import config, indicators, positions, report, timeframes  # noqa: E402
 
@@ -175,6 +178,7 @@ def build_html(data: dict, include_positions: bool) -> str:
 .tf-info,.snap-warn{{padding-left:16px;padding-right:16px}}
 .snap-warn{{margin:0;padding-top:10px;padding-bottom:10px;font-size:11px;
   color:var(--warn);background:rgba(232,163,61,.1);border-bottom:1px solid var(--border);line-height:1.6}}
+{calculator.CSS}
 </style></head><body>
 <div class="app">
   <header class="app__header">
@@ -200,6 +204,15 @@ def build_html(data: dict, include_positions: bool) -> str:
 
   <div class="app__body">
     {positions_section() if include_positions else ''}
+
+    {calculator.build(json.dumps({
+        "stocks": data["stocks"],
+        "stop_atr_multiple": config.STOP_ATR_MULTIPLE,
+        "tp1": config.TAKE_PROFIT_R_MULTIPLE_1,
+        "tp2": config.TAKE_PROFIT_R_MULTIPLE_2,
+        "forward_bars": tf.forward_bars,
+        "is_trailing": config.is_trailing(),
+    }, ensure_ascii=False, separators=(",", ":")))}
 
     <section class="report-section">
       <h2>買いシグナルが強い銘柄</h2>

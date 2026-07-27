@@ -144,7 +144,31 @@ def build(tf=None, with_backtest: bool = True) -> dict:
 
     sells.sort(key=lambda c: (c.stars, c.change_pct))
 
+    # スマホ側（静的ページ）で損益・損切り・トレーリングを計算するためのデータ。
+    # 取得単価は端末に置いたままにしたいので、計算に必要な材料だけを配る。
+    calc_days = tf.forward_bars + 30
+    stocks = {}
+    for code, df in raw.items():
+        try:
+            d = indicators.compute_all(df, tf)
+            latest = d.iloc[-1]
+            atr = latest.get("ATR")
+            if pd.isna(atr) or float(atr) <= 0:
+                continue
+            tail = d.tail(calc_days)
+            stocks[code] = {
+                "name": names.get(code, code),
+                "price": round(float(latest["close"]), 1),
+                "atr": round(float(atr), 2),
+                "high20": round(float(d["high"].tail(config.BREAKOUT_LOOKBACK).max()), 1),
+                "dates": [x.strftime("%Y-%m-%d") for x in tail["date"]],
+                "highs": [round(float(v), 1) for v in tail["high"]],
+            }
+        except Exception:
+            continue
+
     return {
+        "stocks": stocks,
         "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
         "data_date": max(
             (df["date"].iloc[-1] for df in raw.values()), default=None
