@@ -16,7 +16,17 @@ from datetime import datetime
 import pandas as pd
 import yfinance as yf
 
-from . import backtest, config, features, indicators, sectors, signals, timeframes, universe
+from . import (
+    backtest,
+    config,
+    features,
+    indicators,
+    projection,
+    sectors,
+    signals,
+    timeframes,
+    universe,
+)
 from .screener import _extract
 from .yfinance_client import normalize, to_symbol
 
@@ -38,6 +48,7 @@ class Candidate:
     warnings: list[str] = field(default_factory=list)
     edge: float | None = None
     confidence_label: str = ""
+    projection: dict = field(default_factory=dict)
 
 
 def _download(codes: list[str], tf) -> dict[str, pd.DataFrame]:
@@ -130,17 +141,21 @@ def build(tf=None, with_backtest: bool = True) -> dict:
 
     # 買い候補は「条件が揃っていて、かつエントリーまでの距離が近い」順
     buys.sort(key=lambda x: (-x[0].stars, abs(x[0].entry_gap_pct or 999)))
-    top_buys = buys[:10]
+    top_buys = buys[: config.REPORT_TOP_N]
 
-    # 上位だけバックテスト（重いので）
-    if with_backtest:
-        for cand, d in top_buys:
+    # 上位だけバックテストとシグナル条件付きの分布を計算（どちらも重いので）
+    for cand, d in top_buys:
+        if with_backtest:
             try:
                 r = backtest.run(d, tf, cand.stars)
                 cand.edge = r.edge
                 cand.confidence_label = r.label
             except Exception:
                 pass
+        try:
+            cand.projection = projection.conditional(d, tf, cand.stars).as_dict()
+        except Exception:
+            pass
 
     sells.sort(key=lambda c: (c.stars, c.change_pct))
 
@@ -156,6 +171,8 @@ def build(tf=None, with_backtest: bool = True) -> dict:
             if pd.isna(atr) or float(atr) <= 0:
                 continue
             tail = d.tail(calc_days)
+            # 「どこまで上がる／下がるか」の過去分布。無条件版は全銘柄に高速で付けられる
+            proj = projection.unconditional(d, tf)
             stocks[code] = {
                 "name": names.get(code, code),
                 "price": round(float(latest["close"]), 1),
@@ -163,6 +180,14 @@ def build(tf=None, with_backtest: bool = True) -> dict:
                 "high20": round(float(d["high"].tail(config.BREAKOUT_LOOKBACK).max()), 1),
                 "dates": [x.strftime("%Y-%m-%d") for x in tail["date"]],
                 "highs": [round(float(v), 1) for v in tail["high"]],
+                "proj": {
+                    "n": proj.samples,
+                    "days": proj.horizon_days,
+                    "up50": proj.up_p50, "up75": proj.up_p75, "up90": proj.up_p90,
+                    "dn50": proj.down_p50, "dn90": proj.down_p90,
+                    "end50": proj.end_p50,
+                    "day50": proj.day_p50, "day80": proj.day_p80,
+                },
             }
         except Exception:
             continue

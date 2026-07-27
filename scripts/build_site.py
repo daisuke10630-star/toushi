@@ -49,6 +49,34 @@ def stars(n: int) -> str:
     )
 
 
+def projection_block(p: dict, price: float | None) -> str:
+    """過去の実測分布を「どこまで上がったか」の形で見せる。予測ではない。"""
+    if not p or not p.get("samples") or p.get("up_p50") is None:
+        return ""
+
+    def line(label, v, cls=""):
+        if v is None:
+            return ""
+        target = f"（{price * (1 + v / 100):,.0f}円）" if price else ""
+        return (f'<div class="pos__row {cls}"><span>{label}</span>'
+                f'<span class="mono">{v:+.1f}%{target}</span></div>')
+
+    kind = "同型シグナル" if p.get("conditional") else "全期間"
+    return f"""
+    <div class="proj">
+      <p class="proj__head">過去{p['samples']}回の実測（{p['horizon_days']}日以内・{kind}）</p>
+      {line('半数はここまで上昇', p.get('up_p50'), 'proj__up')}
+      {line('上位25%はここまで', p.get('up_p75'), 'proj__up')}
+      {line('上位10%はここまで', p.get('up_p90'), 'proj__up')}
+      {line('半数はここまで下落', p.get('down_p50'), 'proj__dn')}
+      {line('下位10%はここまで', p.get('down_p90'), 'proj__dn')}
+      {f'<p class="pos__note">1日の値動きは中央値±{p["day_p50"]}%、'
+       f'荒い日で±{p["day_p80"]}%（過去500日）</p>' if p.get('day_p50') else ''}
+      <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
+        そこで売らなければ利益は確定しません。</p>
+    </div>"""
+
+
 def candidate_card(c, kind: str) -> str:
     edge_html = ""
     if c.edge is not None:
@@ -84,6 +112,7 @@ def candidate_card(c, kind: str) -> str:
         <span class="stars">{stars(c.stars)}</span>
       </div>
       {rows}
+      {projection_block(c.projection, c.entry_price or c.price)}
       {edge_html}
       {f'<ul class="conf__caveats">{reasons}</ul>' if reasons else ''}
       {f'<ul class="conf__caveats" style="color:var(--warn)">{warns}</ul>' if warns else ''}
@@ -162,7 +191,6 @@ def build_html(data: dict, include_positions: bool) -> str:
     date_str = data["data_date"].strftime("%Y-%m-%d") if data["data_date"] is not None else "—"
 
     buys = "".join(candidate_card(c, "buy") for c in data["top_buys"])
-    sells = "".join(candidate_card(c, "sell") for c in data["top_sells"])
 
     return f"""<!doctype html>
 <html lang="ja"><head><meta charset="utf-8">
@@ -179,6 +207,12 @@ def build_html(data: dict, include_positions: bool) -> str:
 .snap-warn{{margin:0;padding-top:10px;padding-bottom:10px;font-size:11px;
   color:var(--warn);background:rgba(232,163,61,.1);border-bottom:1px solid var(--border);line-height:1.6}}
 {calculator.CSS}
+.proj{{margin:8px 0;padding:8px 10px;border-radius:6px;background:var(--bg);
+  border:1px solid var(--border)}}
+.proj__head{{margin:0 0 4px;font-size:11px;font-weight:700;color:var(--accent)}}
+.proj__up .mono{{color:var(--bull)}}
+.proj__dn .mono{{color:var(--bear)}}
+.proj__warn{{margin:6px 0 0;font-size:10px;line-height:1.5;color:var(--warn)}}
 </style></head><body>
 <div class="app">
   <header class="app__header">
@@ -215,15 +249,9 @@ def build_html(data: dict, include_positions: bool) -> str:
     }, ensure_ascii=False, separators=(",", ":")))}
 
     <section class="report-section">
-      <h2>買いシグナルが強い銘柄</h2>
+      <h2>買いシグナルが強い銘柄 TOP{config.REPORT_TOP_N}</h2>
       <p class="report-lead">★が高く、エントリー目安まで近い順。推奨ではありません。</p>
       <div class="positions__grid">{buys or '<p class="report-lead">該当なし</p>'}</div>
-    </section>
-
-    <section class="report-section">
-      <h2>売りシグナルが出ている銘柄</h2>
-      <p class="report-lead">★が低い、または下降のパーフェクトオーダーが成立している順。</p>
-      <div class="positions__grid">{sells or '<p class="report-lead">該当なし</p>'}</div>
     </section>
   </div>
 </div></body></html>"""

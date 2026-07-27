@@ -114,8 +114,32 @@ def build(config_json: str) -> str:
       peak: peak, trail: Math.round(trail * 10) / 10,
       lockedPct: Math.round((trail / cost - 1) * 10000) / 100,
       atr: s.atr, risk: Math.round(risk * 10) / 10,
-      status: status, label: label, date: pos.date
+      status: status, label: label, date: pos.date, proj: s.proj
     };
+  }
+
+  // 過去の実測分布。予測ではないので幅（中央値・上位25%など）で示す
+  function projBlock(r) {
+    var p = r.proj;
+    if (!p || !p.n || p.up50 == null) return '';
+    var line = function (label, v, cls) {
+      if (v == null) return '';
+      var target = Math.round(r.price * (1 + v / 100));
+      return '<div class="pos__row ' + cls + '"><span>' + label +
+        '</span><span class="mono">' + (v > 0 ? '+' : '') + v.toFixed(1) +
+        '%（' + target.toLocaleString('ja-JP') + '円）</span></div>';
+    };
+    return '<div class="proj"><p class="proj__head">現在値から先の過去分布（' +
+      p.days + '日以内・' + p.n.toLocaleString('ja-JP') + '営業日分）</p>' +
+      line('半数はここまで上昇', p.up50, 'proj__up') +
+      line('上位25%はここまで', p.up75, 'proj__up') +
+      line('上位10%はここまで', p.up90, 'proj__up') +
+      line('半数はここまで下落', p.dn50, 'proj__dn') +
+      line('下位10%はここまで', p.dn90, 'proj__dn') +
+      (p.day50 != null ? '<p class="pos__note">1日の値動きは中央値±' + p.day50 +
+        '%、荒い日で±' + p.day80 + '%（過去500日）</p>' : '') +
+      '<p class="proj__warn">これは予測ではなく過去の分布です。' +
+      '最大上昇に到達しても、そこで売らなければ利益は確定しません。</p></div>';
   }
 
   function card(r) {
@@ -146,6 +170,7 @@ def build(config_json: str) -> str:
       CFG.stop_atr_multiple + ' = ' + yen(r.trail) + '。高値更新で切り上がります' +
       (r.date ? '（' + r.date + '以降で計算）' : '（取得日未入力のため直近' +
         CFG.forward_bars + '営業日で計算）') + '</p></div>' +
+      projBlock(r) +
       '<p class="pos__status pos__status--' + r.status + '">' + r.label + '</p>' +
       '<button class="posform__remove" data-del="' + r.code + '">削除</button></div>';
   }

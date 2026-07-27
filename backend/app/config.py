@@ -183,6 +183,10 @@ def stop_loss_pct(timeframe_key: str) -> float:
 # 勝率を表示するために最低限必要なシグナル発生回数。これ未満は「データ不足」と表示する
 BACKTEST_MIN_SAMPLES = 10
 
+# --- 日次レポートの設定 ---
+# スマホ版に載せる買い候補の件数。多すぎると比較が難しくなるため絞る。
+REPORT_TOP_N = 3
+
 # --- スクリーナーの設定 ---
 # 抽出する★の下限
 SCREEN_MIN_STARS = 4
