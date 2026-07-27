@@ -50,6 +50,8 @@ class Candidate:
     edge: float | None = None
     confidence_label: str = ""
     projection: dict = field(default_factory=dict)
+    overbought: bool = False
+    overbought_reason: str = ""
 
 
 def _download(codes: list[str], tf) -> dict[str, pd.DataFrame]:
@@ -136,7 +138,11 @@ def build(tf=None, with_backtest: bool = True) -> dict:
                 warnings=sig.warnings,
             )
 
-            if sig.stars >= 4:
+            hot, hot_reason = signals.is_overbought(latest, tf)
+            cand.overbought = hot
+            cand.overbought_reason = hot_reason
+            # 買われすぎは候補から外す（検証で成績が改善した）
+            if sig.stars >= 4 and not (config.EXCLUDE_OVERBOUGHT and hot):
                 buys.append((cand, d))
             if sig.stars <= 2 or "売り" in sig.judgement:
                 sells.append(cand)
@@ -185,7 +191,34 @@ def build(tf=None, with_backtest: bool = True) -> dict:
             tail = d.tail(calc_days)
             # 「どこまで上がる／下がるか」の過去分布。無条件版は全銘柄に高速で付けられる
             proj = projection.unconditional(d, tf)
+            # 自分で選んだ銘柄を判定できるよう、条件の充足状況を全銘柄に持たせる
+            d2 = features.compute_all(d, market=market, peers=sector_index.get(sectors.get(code)))
+            sg = signals.generate_signal(d2, tf)
+            lt = d2.iloc[-1]
+            hot, hot_reason = signals.is_overbought(lt, tf)
+            checks = [
+                {"label": "買われすぎでない", "ok": not hot,
+                 "detail": hot_reason or "RSI・ボリンジャーバンドとも過熱していません"},
+                {"label": "パーフェクトオーダー", "ok": sg.perfect_order == "上昇形成",
+                 "detail": f"移動平均は「{sg.perfect_order}」"},
+                {"label": "同業種より強い", "ok": bool(pd.notna(lt.get("RS_SECTOR"))
+                                                      and lt.get("RS_SECTOR") > 0),
+                 "detail": (f"同業種比 {float(lt['RS_SECTOR']):+.1f}%"
+                            if pd.notna(lt.get("RS_SECTOR")) else "業種データなし")},
+                {"label": "ブレイク間近", "ok": bool(sg.entry_price
+                                                  and sg.entry_price / float(lt["close"]) - 1 <= 0.03),
+                 "detail": (f"エントリー目安 {sg.entry_price:,.1f}円"
+                            if sg.entry_price else "算出不可")},
+            ]
             stocks[code] = {
+                "stars": sg.stars,
+                "judgement": sg.judgement,
+                "entry": sg.entry_price,
+                "stop": sg.stop_loss,
+                "tp1": sg.take_profit_1,
+                "tp2": sg.take_profit_2,
+                "checks": checks,
+                "score": sum(1 for c in checks if c["ok"]),
                 "name": names.get(code, code),
                 "price": round(float(latest["close"]), 1),
                 "atr": round(float(atr), 2),

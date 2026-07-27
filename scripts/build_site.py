@@ -57,9 +57,11 @@ def projection_block(p: dict, price: float | None) -> str:
     def line(label, v, cls=""):
         if v is None:
             return ""
-        target = f"（{price * (1 + v / 100):,.0f}円）" if price else ""
+        # 金額を主、率を補助で表示する
+        target = f"{price * (1 + v / 100):,.0f}円" if price else "—"
         return (f'<div class="pos__row {cls}"><span>{label}</span>'
-                f'<span class="mono">{v:+.1f}%{target}</span></div>')
+                f'<span class="mono">{target}'
+                f'<span class="proj__pct">（{v:+.1f}%）</span></span></div>')
 
     kind = "同型シグナル" if p.get("conditional") else "全期間"
     return f"""
@@ -213,6 +215,7 @@ def build_html(data: dict, include_positions: bool) -> str:
 .proj__up .mono{{color:var(--bull)}}
 .proj__dn .mono{{color:var(--bear)}}
 .proj__warn{{margin:6px 0 0;font-size:10px;line-height:1.5;color:var(--warn)}}
+.proj__pct{{color:var(--text-muted);font-size:10px}}
 </style></head><body>
 <div class="app">
   <header class="app__header">

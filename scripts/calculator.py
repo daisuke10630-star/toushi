@@ -118,6 +118,28 @@ def build(config_json: str) -> str:
     };
   }
 
+  // 4項目のうちいくつ満たしているか。推奨ではなく条件の充足状況を示す
+  function scoreBlock(code) {
+    var s = CFG.stocks[code];
+    if (!s || !s.checks) return '';
+    var n = s.score, total = s.checks.length;
+    var cls = n === total ? 'score--full' : n >= total - 1 ? 'score--ok' : 'score--low';
+    var items = s.checks.map(function (c) {
+      return '<div class="pos__row"><span>' + (c.ok ? '✓ ' : '✕ ') + c.label +
+        '</span><span class="mono">' + c.detail + '</span></div>';
+    }).join('');
+    return '<div class="score ' + cls + '">' +
+      '<p class="score__head">エントリー条件 ' + n + ' / ' + total + ' 充足　★' + s.stars +
+      '（' + s.judgement + '）</p>' + items +
+      '<div class="pos__row score__lines"><span>エントリー目安</span><span class="mono">' +
+      (s.entry ? yen(s.entry) : '—') + '</span></div>' +
+      '<div class="pos__row score__lines"><span>損切り／利確①／利確②</span><span class="mono">' +
+      (s.stop ? yen(s.stop) : '—') + ' / ' + (s.tp1 ? yen(s.tp1) : '—') + ' / ' +
+      (s.tp2 ? yen(s.tp2) : '—') + '</span></div>' +
+      '<p class="proj__warn">条件を満たす＝上がる、ではありません。' +
+      '検証では買い持ちに負ける銘柄も多くあります。</p></div>';
+  }
+
   // 過去の実測分布。予測ではないので幅（中央値・上位25%など）で示す
   function projBlock(r) {
     var p = r.proj;
@@ -126,8 +148,9 @@ def build(config_json: str) -> str:
       if (v == null) return '';
       var target = Math.round(r.price * (1 + v / 100));
       return '<div class="pos__row ' + cls + '"><span>' + label +
-        '</span><span class="mono">' + (v > 0 ? '+' : '') + v.toFixed(1) +
-        '%（' + target.toLocaleString('ja-JP') + '円）</span></div>';
+        '</span><span class="mono">' + target.toLocaleString('ja-JP') + '円' +
+        '<span class="proj__pct">（' + (v > 0 ? '+' : '') + v.toFixed(1) + '%）</span>' +
+        '</span></div>';
     };
     return '<div class="proj"><p class="proj__head">現在値から先の過去分布（' +
       p.days + '日以内・' + p.n.toLocaleString('ja-JP') + '営業日分）</p>' +
@@ -170,6 +193,7 @@ def build(config_json: str) -> str:
       CFG.stop_atr_multiple + ' = ' + yen(r.trail) + '。高値更新で切り上がります' +
       (r.date ? '（' + r.date + '以降で計算）' : '（取得日未入力のため直近' +
         CFG.forward_bars + '営業日で計算）') + '</p></div>' +
+      scoreBlock(r.code) +
       projBlock(r) +
       '<p class="pos__status pos__status--' + r.status + '">' + r.label + '</p>' +
       '<button class="posform__remove" data-del="' + r.code + '">削除</button></div>';
@@ -247,4 +271,14 @@ CSS = """
 .calc__total{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
   font-size:15px;font-weight:700;margin-bottom:10px}
 .pos .posform__remove{margin-top:8px;width:100%}
+.score{margin:8px 0;padding:8px 10px;border-radius:6px;background:var(--bg);
+  border:1px solid var(--border)}
+.score__head{margin:0 0 5px;font-size:12px;font-weight:700}
+.score--full{border-color:var(--accent)}
+.score--full .score__head{color:var(--accent)}
+.score--ok .score__head{color:var(--text)}
+.score--low{border-color:rgba(229,72,77,.4)}
+.score--low .score__head{color:var(--bull)}
+.score__lines{border-top:1px solid var(--border);margin-top:4px;padding-top:4px}
+.proj__pct{color:var(--text-muted);font-size:10px}
 """

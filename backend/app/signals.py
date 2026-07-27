@@ -28,6 +28,23 @@ from .timeframes import TimeframeParams
 STARS_NOTE = "★は強気条件の揃い具合（最大5）。上昇確率ではありません。"
 
 
+def is_overbought(latest: pd.Series, tf: TimeframeParams) -> tuple[bool, str]:
+    """買われすぎかどうか。買い候補から外す判定に使う。
+
+    高値ブレイクで買う設計は放っておくと過熱を掴むため、
+    RSI過熱圏または終値が+2σ超のときは候補から除外する（10年検証で成績が改善）。
+    """
+    rsi = latest.get("RSI_SHORT")
+    rsi_long = latest.get("RSI_LONG")
+    for v, label in ((rsi, "短期"), (rsi_long, "長期")):
+        if pd.notna(v) and v >= tf.rsi_overheat:
+            return True, f"RSI{label} {v:.1f} が過熱圏（{tf.rsi_overheat:g}以上）"
+    bb2 = latest.get("BB_PLUS_2")
+    if pd.notna(bb2) and latest["close"] >= bb2:
+        return True, f"終値がボリンジャーバンド+2σ（{float(bb2):,.1f}円）以上"
+    return False, ""
+
+
 @dataclass
 class SignalResult:
     judgement: str  # "買い" / "監視" / "売り" / "様子見"
