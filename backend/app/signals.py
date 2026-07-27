@@ -174,6 +174,17 @@ def generate_signal(
     # --- ローソク足の直近パターン ---
     result.reasons.append(f"直近足は「{latest['candle_label']}」")
 
+    # --- ダイバージェンス ---
+    # 検証では除外条件にしても成績が改善しなかったため、★には influence させず
+    # 情報としてのみ表示する（前半+9.2% vs 除外なし+14.0%、後半+1.8% vs +1.2%）。
+    bear_div, bear_note = patterns.detect_bearish_divergence(df, tf)
+    if bear_div:
+        result.warnings.append(f"弱気ダイバージェンス: {bear_note}　※★には反映していません")
+    else:
+        bull_div, bull_note = patterns.detect_bullish_divergence(df, tf)
+        if bull_div:
+            result.reasons.append(f"強気ダイバージェンス: {bull_note}　※★には反映していません")
+
     # --- ダブルトップ／ダブルボトム ---
     for p in patterns.analyze_patterns(df, tf):
         if p.detected:

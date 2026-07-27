@@ -103,10 +103,12 @@ def candidate_card(c, kind: str) -> str:
     reasons = "".join(f"<li>{esc(r)}</li>" for r in c.reasons[:4])
     warns = "".join(f"<li>{esc(w)}</li>" for w in c.warnings[:3])
 
+    tag = ('<span class="tag-cheap">少額枠</span>' if getattr(c, "affordable_pick", False)
+           else "")
     return f"""
     <div class="pos pos--{kind}">
       <div class="pos__head">
-        <span class="pos__name">{esc(c.name)}</span>
+        <span class="pos__name">{esc(c.name)}{tag}</span>
         <span class="mono pos__code">{esc(c.code)}｜{esc(c.sector)}</span>
       </div>
       <div class="star-badge star-badge--compact">
@@ -216,6 +218,8 @@ def build_html(data: dict, include_positions: bool) -> str:
 .proj__dn .mono{{color:var(--bear)}}
 .proj__warn{{margin:6px 0 0;font-size:10px;line-height:1.5;color:var(--warn)}}
 .proj__pct{{color:var(--text-muted);font-size:10px}}
+.tag-cheap{{margin-left:6px;padding:1px 6px;border-radius:3px;font-size:10px;
+  background:rgba(110,231,196,.15);color:var(--accent);font-weight:600}}
 </style></head><body>
 <div class="app">
   <header class="app__header">
@@ -253,7 +257,10 @@ def build_html(data: dict, include_positions: bool) -> str:
 
     <section class="report-section">
       <h2>買いシグナルが強い銘柄 TOP{config.REPORT_TOP_N}</h2>
-      <p class="report-lead">★が高く、エントリー目安まで近い順。推奨ではありません。</p>
+      <p class="report-lead">★が高く、エントリー目安まで近い順。推奨ではありません。<br>
+        RSI過熱圏・+2σ超の銘柄は除外しています。
+        「少額枠」は{config.REPORT_AFFORDABLE_PRICE:,}円以下の銘柄を確保するため、
+        順位を繰り上げたものです（そのぶん条件の揃い方は劣ります）。</p>
       <div class="positions__grid">{buys or '<p class="report-lead">該当なし</p>'}</div>
     </section>
   </div>

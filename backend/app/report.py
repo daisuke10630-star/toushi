@@ -52,6 +52,7 @@ class Candidate:
     projection: dict = field(default_factory=dict)
     overbought: bool = False
     overbought_reason: str = ""
+    affordable_pick: bool = False  # 少額枠として繰り上げた銘柄か
 
 
 def _download(codes: list[str], tf) -> dict[str, pd.DataFrame]:
@@ -152,6 +153,26 @@ def build(tf=None, with_backtest: bool = True) -> dict:
     # 買い候補は「条件が揃っていて、かつエントリーまでの距離が近い」順
     buys.sort(key=lambda x: (-x[0].stars, abs(x[0].entry_gap_pct or 999)))
     top_buys = buys[: config.REPORT_TOP_N]
+
+    # 少額で買える銘柄を最低1つ確保する。順位を崩すので精度は多少落ちるが、
+    # 上位が高額株ばかりだと実際に試せないため。
+    cap = config.REPORT_AFFORDABLE_PRICE
+    need = config.REPORT_AFFORDABLE_MIN_COUNT
+    cheap_in_top = sum(1 for c, _ in top_buys if c.price <= cap)
+    if cheap_in_top < need:
+        cheap = [x for x in buys[config.REPORT_TOP_N :] if x[0].price <= cap]
+        for _ in range(need - cheap_in_top):
+            if not cheap:
+                break
+            picked = cheap.pop(0)
+            picked[0].affordable_pick = True
+            # 末尾の高額銘柄と入れ替える
+            for i in range(len(top_buys) - 1, -1, -1):
+                if top_buys[i][0].price > cap:
+                    top_buys[i] = picked
+                    break
+            else:
+                top_buys.append(picked)
 
     # 上位だけバックテストとシグナル条件付きの分布を計算（どちらも重いので）
     for cand, d in top_buys:

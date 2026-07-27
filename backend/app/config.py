@@ -192,8 +192,13 @@ BACKTEST_MIN_SAMPLES = 10
 EXCLUDE_OVERBOUGHT = True
 
 # --- 日次レポートの設定 ---
-# スマホ版に載せる買い候補の件数。多すぎると比較が難しくなるため絞る。
-REPORT_TOP_N = 3
+# スマホ版に載せる買い候補の件数。
+REPORT_TOP_N = 5
+
+# 買いやすさへの配慮：この価格以下の銘柄を最低1つは候補に含める。
+# 純粋な順位付けを崩すので、精度は多少落ちる（そのぶん少額でも試せる）。
+REPORT_AFFORDABLE_PRICE = 5000
+REPORT_AFFORDABLE_MIN_COUNT = 1
 
 # --- スクリーナーの設定 ---
 # 抽出する★の下限

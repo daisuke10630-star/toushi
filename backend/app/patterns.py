@@ -116,5 +116,59 @@ def detect_double_bottom(
     return PatternResult("ダブルボトム", False, "谷は検出したが、安さの一致度が低く典型形とは言えません")
 
 
+def detect_bearish_divergence(
+    df: pd.DataFrame, tf: TimeframeParams, lookback: int = 60
+) -> tuple[bool, str]:
+    """弱気ダイバージェンス：株価は高値を切り上げたのにRSIは切り下げている状態。
+
+    「値段は上がっているが、上げる力は弱まっている」というサインとされる。
+    高値ブレイクで買う設計と相性が悪い可能性があるため、除外の判定材料にする。
+    """
+    if "RSI_SHORT" not in df.columns:
+        return False, ""
+    window = df.tail(lookback).reset_index(drop=True)
+    peaks = _find_local_extrema(window["high"], order=tf.extrema_order, kind="max")
+    if len(peaks) < 2:
+        return False, ""
+
+    p1, p2 = peaks[-2], peaks[-1]
+    h1, h2 = float(window["high"].iloc[p1]), float(window["high"].iloc[p2])
+    r1, r2 = window["RSI_SHORT"].iloc[p1], window["RSI_SHORT"].iloc[p2]
+    if pd.isna(r1) or pd.isna(r2):
+        return False, ""
+
+    if h2 > h1 and r2 < r1:
+        return True, (
+            f"株価は{h1:,.0f}→{h2:,.0f}円と高値を切り上げたのに、"
+            f"RSIは{r1:.1f}→{r2:.1f}と切り下げ（勢いの衰え）"
+        )
+    return False, ""
+
+
+def detect_bullish_divergence(
+    df: pd.DataFrame, tf: TimeframeParams, lookback: int = 60
+) -> tuple[bool, str]:
+    """強気ダイバージェンス：株価は安値を切り下げたのにRSIは切り上げている状態。"""
+    if "RSI_SHORT" not in df.columns:
+        return False, ""
+    window = df.tail(lookback).reset_index(drop=True)
+    troughs = _find_local_extrema(window["low"], order=tf.extrema_order, kind="min")
+    if len(troughs) < 2:
+        return False, ""
+
+    t1, t2 = troughs[-2], troughs[-1]
+    l1, l2 = float(window["low"].iloc[t1]), float(window["low"].iloc[t2])
+    r1, r2 = window["RSI_SHORT"].iloc[t1], window["RSI_SHORT"].iloc[t2]
+    if pd.isna(r1) or pd.isna(r2):
+        return False, ""
+
+    if l2 < l1 and r2 > r1:
+        return True, (
+            f"株価は{l1:,.0f}→{l2:,.0f}円と安値を切り下げたのに、"
+            f"RSIは{r1:.1f}→{r2:.1f}と切り上げ（下げ渋り）"
+        )
+    return False, ""
+
+
 def analyze_patterns(df: pd.DataFrame, tf: TimeframeParams) -> list[PatternResult]:
     return [detect_double_top(df, tf), detect_double_bottom(df, tf)]
