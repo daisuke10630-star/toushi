@@ -140,6 +140,23 @@ def build(config_json: str) -> str:
       '検証では買い持ちに負ける銘柄も多くあります。</p></div>';
   }
 
+  // 1日の値動きを、現在値からの円建ての上下幅で示す
+  function dayRange(p, current) {
+    if (!current || p.day50 == null) return '';
+    var row = function (label, pct) {
+      if (pct == null) return '';
+      var w = current * pct / 100;
+      return '<div class="pos__row"><span>' + label + '</span><span class="mono">' +
+        Math.round(current - w).toLocaleString('ja-JP') + ' 〜 ' +
+        Math.round(current + w).toLocaleString('ja-JP') + '円' +
+        '<span class="proj__pct">（±' + Math.round(w).toLocaleString('ja-JP') +
+        '円）</span></span></div>';
+    };
+    return '<div class="proj__day"><p class="proj__sub">1日の値動き（現在値 ' +
+      Math.round(current).toLocaleString('ja-JP') + '円 を基準・過去500日）</p>' +
+      row('普通の日（中央値）', p.day50) + row('荒い日（上位20%）', p.day80) + '</div>';
+  }
+
   // 過去の実測分布。予測ではないので幅（中央値・上位25%など）で示す
   function projBlock(r) {
     var p = r.proj;
@@ -159,8 +176,7 @@ def build(config_json: str) -> str:
       line('上位10%はここまで', p.up90, 'proj__up') +
       line('半数はここまで下落', p.dn50, 'proj__dn') +
       line('下位10%はここまで', p.dn90, 'proj__dn') +
-      (p.day50 != null ? '<p class="pos__note">1日の値動きは中央値±' + p.day50 +
-        '%、荒い日で±' + p.day80 + '%（過去500日）</p>' : '') +
+      dayRange(p, r.price) +
       '<p class="proj__warn">これは予測ではなく過去の分布です。' +
       '最大上昇に到達しても、そこで売らなければ利益は確定しません。</p></div>';
   }
@@ -281,4 +297,6 @@ CSS = """
 .score--low .score__head{color:var(--bull)}
 .score__lines{border-top:1px solid var(--border);margin-top:4px;padding-top:4px}
 .proj__pct{color:var(--text-muted);font-size:10px}
+.proj__day{margin-top:6px;padding-top:6px;border-top:1px solid var(--border)}
+.proj__sub{margin:0 0 3px;font-size:10px;color:var(--text-muted)}
 """

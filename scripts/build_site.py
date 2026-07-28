@@ -49,7 +49,26 @@ def stars(n: int) -> str:
     )
 
 
-def projection_block(p: dict, price: float | None) -> str:
+def daily_range_rows(p: dict, current: float | None) -> str:
+    """1日の値動きを、現在値からの円建ての上下幅で示す。"""
+    if not current or p.get("day_p50") is None:
+        return ""
+
+    def row(label, pct):
+        if pct is None:
+            return ""
+        w = current * pct / 100
+        return (f'<div class="pos__row"><span>{label}</span>'
+                f'<span class="mono">{current - w:,.0f} 〜 {current + w:,.0f}円'
+                f'<span class="proj__pct">（±{w:,.0f}円）</span></span></div>')
+
+    return (f'<div class="proj__day">'
+            f'<p class="proj__sub">1日の値動き（現在値 {current:,.0f}円 を基準・過去500日）</p>'
+            f'{row("普通の日（中央値）", p.get("day_p50"))}'
+            f'{row("荒い日（上位20%）", p.get("day_p80"))}</div>')
+
+
+def projection_block(p: dict, price: float | None, current: float | None = None) -> str:
     """過去の実測分布を「どこまで上がったか」の形で見せる。予測ではない。"""
     if not p or not p.get("samples") or p.get("up_p50") is None:
         return ""
@@ -72,8 +91,7 @@ def projection_block(p: dict, price: float | None) -> str:
       {line('上位10%はここまで', p.get('up_p90'), 'proj__up')}
       {line('半数はここまで下落', p.get('down_p50'), 'proj__dn')}
       {line('下位10%はここまで', p.get('down_p90'), 'proj__dn')}
-      {f'<p class="pos__note">1日の値動きは中央値±{p["day_p50"]}%、'
-       f'荒い日で±{p["day_p80"]}%（過去500日）</p>' if p.get('day_p50') else ''}
+      {daily_range_rows(p, current)}
       <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
         そこで売らなければ利益は確定しません。</p>
     </div>"""
@@ -116,7 +134,7 @@ def candidate_card(c, kind: str) -> str:
         <span class="stars">{stars(c.stars)}</span>
       </div>
       {rows}
-      {projection_block(c.projection, c.entry_price or c.price)}
+      {projection_block(c.projection, c.entry_price or c.price, c.price)}
       {edge_html}
       {f'<ul class="conf__caveats">{reasons}</ul>' if reasons else ''}
       {f'<ul class="conf__caveats" style="color:var(--warn)">{warns}</ul>' if warns else ''}
@@ -218,6 +236,8 @@ def build_html(data: dict, include_positions: bool) -> str:
 .proj__dn .mono{{color:var(--bear)}}
 .proj__warn{{margin:6px 0 0;font-size:10px;line-height:1.5;color:var(--warn)}}
 .proj__pct{{color:var(--text-muted);font-size:10px}}
+.proj__day{{margin-top:6px;padding-top:6px;border-top:1px solid var(--border)}}
+.proj__sub{{margin:0 0 3px;font-size:10px;color:var(--text-muted)}}
 .tag-cheap{{margin-left:6px;padding:1px 6px;border-radius:3px;font-size:10px;
   background:rgba(110,231,196,.15);color:var(--accent);font-weight:600}}
 </style></head><body>
