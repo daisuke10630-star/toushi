@@ -39,6 +39,10 @@ jobs:
         # --with-positions は付けない。保有銘柄・取得単価が公開ページに載るため。
         run: python scripts/build_site.py
 
+      - name: 株価ファイルも初期化
+        # 相場中の更新ワークフローが差し替えるが、夜間時点の値を入れておく
+        run: python scripts/update_prices.py
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs

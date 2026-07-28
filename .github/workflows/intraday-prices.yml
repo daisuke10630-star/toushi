@@ -1,0 +1,63 @@
+name: 相場中の株価更新
+
+# 分析（TOP5の選定など）は夜間バッチに任せ、こちらは株価だけを差し替える。
+# 公開中のページをそのまま拾い直し、prices.json だけを新しくして再公開する。
+on:
+  schedule:
+    # 東証の立会時間 9:00-15:30 JST = 0:00-6:30 UTC。15分ごとに更新する。
+    # GitHubのスケジュールは混雑時に数分〜数十分ずれるため、時刻は保証されない。
+    - cron: "*/15 0-6 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 夜間バッチと重なった場合は、そちらを優先して待つ
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: 依存パッケージのインストール
+        run: pip install -r backend/requirements.txt
+
+      - name: 公開中のページを取得
+        # 分析結果は夜間バッチが作ったものをそのまま使う。
+        # 取得に失敗したら価格だけのページを公開してしまうので、ここで止める。
+        run: |
+          mkdir -p docs
+          curl -sfL -o docs/index.html \
+            "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/index.html"
+          curl -sfL -o docs/report.json \
+            "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/report.json" || true
+          touch docs/.nojekyll
+          test -s docs/index.html
+
+      - name: 株価を更新
+        run: python scripts/update_prices.py
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: refresh
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -25,6 +25,8 @@ def build(config_json: str) -> str:
     株価は下記「データ基準日」時点のものです（リアルタイムではありません）。
   </p>
 
+  <p class="price-status" id="price-status">株価を確認中…</p>
+
   <form class="calc__form" id="calc-form" autocomplete="off">
     <div class="calc__row">
       <label>証券コード
@@ -267,6 +269,31 @@ def build(config_json: str) -> str:
   });
 
   render();
+
+  // 相場中に更新される prices.json を読み、株価だけ新しいものに差し替える。
+  // 分析（★・エントリー目安など）は夜間バッチの結果のまま。
+  // キャッシュを避けるため毎回クエリを変える。
+  fetch('prices.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d || !d.prices) return;
+      var n = 0;
+      Object.keys(d.prices).forEach(function (code) {
+        if (CFG.stocks[code]) {
+          CFG.stocks[code].price = d.prices[code].price;
+          CFG.stocks[code].change_pct = d.prices[code].change_pct;
+          n++;
+        }
+      });
+      var el = $('price-status');
+      if (el) {
+        el.innerHTML = '株価は <strong>' + d.updated_at + '</strong> 時点（' + n +
+          '銘柄）。' + d.note;
+        el.classList.add('price-status--live');
+      }
+      render();
+    })
+    .catch(function () { /* 取得できなくても夜間バッチの価格で表示を続ける */ });
 })();
 </script>"""
 
@@ -299,4 +326,8 @@ CSS = """
 .proj__pct{color:var(--text-muted);font-size:10px}
 .proj__day{margin-top:6px;padding-top:6px;border-top:1px solid var(--border)}
 .proj__sub{margin:0 0 3px;font-size:10px;color:var(--text-muted)}
+.price-status{margin:0 0 10px;padding:7px 10px;border-radius:6px;font-size:11px;
+  line-height:1.5;background:var(--panel-alt);border:1px solid var(--border);
+  color:var(--text-muted)}
+.price-status--live{border-color:var(--accent);color:var(--text)}
 """
