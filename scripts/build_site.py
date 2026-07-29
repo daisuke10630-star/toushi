@@ -273,6 +273,7 @@ def build_html(data: dict, include_positions: bool) -> str:
         "tp2": config.TAKE_PROFIT_R_MULTIPLE_2,
         "forward_bars": tf.forward_bars,
         "is_trailing": config.is_trailing(),
+        "generated_at": data["generated_at"],
     }, ensure_ascii=False, separators=(",", ":")))}
 
     <section class="report-section">

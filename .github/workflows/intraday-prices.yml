@@ -33,17 +33,13 @@ jobs:
       - name: 依存パッケージのインストール
         run: pip install -r backend/requirements.txt
 
-      - name: 公開中のページを取得
-        # 分析結果は夜間バッチが作ったものをそのまま使う。
-        # 取得に失敗したら価格だけのページを公開してしまうので、ここで止める。
+      - name: ページ本体の存在確認
+        # 分析結果はリポジトリにコミット済みのものを使う。
+        # 公開URLから取得し直すと、CDNが古い版を返したときに
+        # 新しい分析結果を巻き戻してしまうため。
         run: |
-          mkdir -p docs
-          curl -sfL -o docs/index.html \
-            "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/index.html"
-          curl -sfL -o docs/report.json \
-            "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/report.json" || true
-          touch docs/.nojekyll
           test -s docs/index.html
+          touch docs/.nojekyll
 
       - name: 株価を更新
         run: python scripts/update_prices.py

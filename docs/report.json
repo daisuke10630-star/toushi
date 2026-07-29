@@ -1,0 +1,512 @@
+{
+ "generated_at": "2026-07-29 21:28",
+ "data_date": "2026-07-29",
+ "universe_size": 246,
+ "analyzed": 244,
+ "top_buys": [
+  {
+   "code": "6770",
+   "name": "Alps Alpine Co., Ltd.",
+   "sector": "Technology",
+   "price": 2224.5,
+   "change_pct": 0.79,
+   "stars": 5,
+   "judgement": "買い",
+   "entry_price": 2244.5,
+   "stop_loss": 2101.4,
+   "take_profit_1": 2459.1,
+   "entry_gap_pct": 0.9,
+   "reasons": [
+    "移動平均線は完全整列前。トレンドの土台は形成途中",
+    "RSI短期9本65.4/長期14本60.5は中立圏",
+    "同業種平均を+30.4%上回る。セクター内で優位",
+    "直近足は「陰線」",
+    "ダブルボトム候補: 直近60本以内に近い安さの谷が2回（2003円 / 2006円）出現。底打ち圏の候補",
+    "参考：ボリンジャーバンド+2σは2,227.0円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
+   ],
+   "warnings": [],
+   "edge": -6.25,
+   "confidence_label": "58%（64回中37回成功）",
+   "projection": {
+    "samples": 64,
+    "horizon_days": 90,
+    "up_p50": 8.13,
+    "up_p75": 17.86,
+    "up_p90": 26.1,
+    "down_p50": -11.51,
+    "down_p90": -25.9,
+    "end_p50": -1.55,
+    "day_p50": 1.15,
+    "day_p80": 2.47,
+    "conditional": true,
+    "note": "過去64回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+   },
+   "overbought": false,
+   "overbought_reason": "",
+   "affordable_pick": false
+  },
+  {
+   "code": "9501",
+   "name": "Tokyo Electric Power Company Holdings, Incorporated",
+   "sector": "Utilities",
+   "price": 533.7,
+   "change_pct": 1.93,
+   "stars": 5,
+   "judgement": "買い",
+   "entry_price": 538.5,
+   "stop_loss": 499.6,
+   "take_profit_1": 596.8,
+   "entry_gap_pct": 0.9,
+   "reasons": [
+    "移動平均線は完全整列前。トレンドの土台は形成途中",
+    "RSI短期9本68.5/長期14本61.7は中立圏",
+    "同業種平均を+12.6%上回る。セクター内で優位",
+    "直近足は「陽線」",
+    "強気ダイバージェンス: 株価は450→443円と安値を切り下げたのに、RSIは27.9→29.0と切り上げ（下げ渋り）　※★には反映していません",
+    "ダブルボトム候補: 直近60本以内に近い安さの谷が2回（450円 / 443円）出現。底打ち圏の候補",
+    "参考：ボリンジャーバンド+2σは538.8円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
+   ],
+   "warnings": [],
+   "edge": -5.98,
+   "confidence_label": "41%（66回中27回成功）",
+   "projection": {
+    "samples": 66,
+    "horizon_days": 90,
+    "up_p50": 30.09,
+    "up_p75": 38.42,
+    "up_p90": 58.0,
+    "down_p50": -10.22,
+    "down_p90": -34.92,
+    "end_p50": 6.32,
+    "day_p50": 1.88,
+    "day_p80": 3.66,
+    "conditional": true,
+    "note": "過去66回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+   },
+   "overbought": false,
+   "overbought_reason": "",
+   "affordable_pick": false
+  },
+  {
+   "code": "6098",
+   "name": "Recruit Holdings Co., Ltd.",
+   "sector": "Communication Services",
+   "price": 13100.0,
+   "change_pct": 4.01,
+   "stars": 5,
+   "judgement": "買い",
+   "entry_price": 13270.0,
+   "stop_loss": 12381.3,
+   "take_profit_1": 14603.1,
+   "entry_gap_pct": 1.3,
+   "reasons": [
+    "パーフェクトオーダー成立（株価＞5日線＞25日線＞80日線＞120日線）",
+    "RSI短期9本68.2/長期14本67.3は中立圏",
+    "同業種平均を+4.0%上回る。セクター内で優位",
+    "直近足は「陽線」",
+    "ダブルボトム候補: 直近60本以内に近い安さの谷が2回（11990円 / 11905円）出現。底打ち圏の候補",
+    "参考：ボリンジャーバンド+2σは13,279.2円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
+   ],
+   "warnings": [
+    "ダブルトップ候補: 直近60本以内に近い高さの山が2回（12885円 / 12920円）出現。天井圏の警戒サイン候補"
+   ],
+   "edge": -7.82,
+   "confidence_label": "41%（76回中31回成功）",
+   "projection": {
+    "samples": 76,
+    "horizon_days": 90,
+    "up_p50": 19.95,
+    "up_p75": 30.31,
+    "up_p90": 36.9,
+    "down_p50": -12.63,
+    "down_p90": -34.08,
+    "end_p50": 13.28,
+    "day_p50": 1.65,
+    "day_p80": 3.36,
+    "conditional": true,
+    "note": "過去76回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+   },
+   "overbought": false,
+   "overbought_reason": "",
+   "affordable_pick": false
+  },
+  {
+   "code": "4151",
+   "name": "Kyowa Kirin Co., Ltd.",
+   "sector": "Healthcare",
+   "price": 2703.0,
+   "change_pct": 1.77,
+   "stars": 5,
+   "judgement": "買い",
+   "entry_price": 2751.0,
+   "stop_loss": 2634.4,
+   "take_profit_1": 2925.9,
+   "entry_gap_pct": 1.78,
+   "reasons": [
+    "パーフェクトオーダー成立（株価＞5日線＞25日線＞80日線＞120日線）",
+    "RSI短期9本66.2/長期14本64.0は中立圏",
+    "直近足は「陽線」",
+    "ダブルボトム候補: 直近60本以内に近い安さの谷が2回（2600円 / 2578円）出現。底打ち圏の候補",
+    "参考：ボリンジャーバンド+2σは2,744.5円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
+   ],
+   "warnings": [
+    "ダブルトップ候補: 直近60本以内に近い高さの山が2回（2751円 / 2704円）出現。天井圏の警戒サイン候補"
+   ],
+   "edge": -1.01,
+   "confidence_label": "22%（36回中8回成功）",
+   "projection": {
+    "samples": 36,
+    "horizon_days": 90,
+    "up_p50": 4.83,
+    "up_p75": 7.17,
+    "up_p90": 9.39,
+    "down_p50": -14.31,
+    "down_p90": -17.53,
+    "end_p50": -9.23,
+    "day_p50": 0.82,
+    "day_p80": 1.79,
+    "conditional": true,
+    "note": "過去36回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+   },
+   "overbought": false,
+   "overbought_reason": "",
+   "affordable_pick": false
+  },
+  {
+   "code": "8005",
+   "name": "スクロール",
+   "sector": "Consumer Cyclical",
+   "price": 1725.0,
+   "change_pct": 0.64,
+   "stars": 5,
+   "judgement": "買い",
+   "entry_price": 1756.0,
+   "stop_loss": 1702.7,
+   "take_profit_1": 1835.9,
+   "entry_gap_pct": 1.8,
+   "reasons": [
+    "パーフェクトオーダー成立（株価＞5日線＞25日線＞80日線＞120日線）",
+    "RSI短期9本57.5/長期14本58.6は中立圏",
+    "同業種平均を+4.9%上回る。セクター内で優位",
+    "直近足は「陽線」",
+    "参考：ボリンジャーバンド+2σは1,774.8円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
+   ],
+   "warnings": [
+    "弱気ダイバージェンス: 株価は1,737→1,756円と高値を切り上げたのに、RSIは75.3→71.2と切り下げ（勢いの衰え）　※★には反映していません"
+   ],
+   "edge": -6.52,
+   "confidence_label": "59%（80回中47回成功）",
+   "projection": {
+    "samples": 80,
+    "horizon_days": 90,
+    "up_p50": 11.28,
+    "up_p75": 21.33,
+    "up_p90": 27.08,
+    "down_p50": -6.77,
+    "down_p90": -25.11,
+    "end_p50": 3.3,
+    "day_p50": 0.64,
+    "day_p80": 1.33,
+    "conditional": true,
+    "note": "過去80回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+   },
+   "overbought": false,
+   "overbought_reason": "",
+   "affordable_pick": false
+  }
+ ],
+ "top_sells": [
+  {
+   "code": "5714",
+   "name": "5714",
+   "sector": "Basic Materials",
+   "price": 7907.0,
+   "change_pct": -2.25,
+   "stars": 1,
+   "judgement": "売り／様子見",
+   "entry_price": 9020.0,
+   "stop_loss": 8338.8,
+   "take_profit_1": 10041.8,
+   "entry_gap_pct": 14.08,
+   "reasons": [
+    "移動平均線は完全整列前。トレンドの土台は形成途中",
+    "RSI短期9本34.8/長期14本36.9は中立圏",
+    "株価が-2σを下回るゾーン。統計的な売られすぎ、逆張り候補（順張り優先が原則）",
+    "直近足は「陰線」",
+    "参考：ボリンジャーバンド+2σは9,046.7円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
+   ],
+   "warnings": [
+    "同業種平均に-3.8%劣後。セクター内で見劣りします",
+    "ダブルトップ候補: 直近60本以内に近い高さの山が2回（8530円 / 8657円）出現。天井圏の警戒サイン候補"
+   ],
+   "edge": null,
+   "confidence_label": "",
+   "projection": {},
+   "overbought": false,
+   "overbought_reason": "",
+   "affordable_pick": false
+  },
+  {
+   "code": "5711",
+   "name": "5711",
+   "sector": "Basic Materials",
+   "price": 3944.0,
+   "change_pct": -2.23,
+   "stars": 1,
+   "judgement": "売り／様子見",
+   "entry_price": 4654.0,
+   "stop_loss": 4279.1,
+   "take_profit_1": 5216.3,
+   "entry_gap_pct": 18.0,
+   "reasons": [
+    "RSI短期9本36.4/長期14本38.2は中立圏",
+    "直近足は「陰線」",
+    "強気ダイバージェンス: 株価は3,927→3,854円と安値を切り下げたのに、RSIは25.3→33.3と切り上げ（下げ渋り）　※★には反映していません",
+    "ダブルボトム候補: 直近60本以内に近い安さの谷が2回（3927円 / 3854円）出現。底打ち圏の候補",
+    "参考：ボリンジャーバンド+2σは4,622.3円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
+   ],
+   "warnings": [
+    "下降のパーフェクトオーダーが成立。トレンドは弱い状態",
+    "同業種平均に-3.6%劣後。セクター内で見劣りします",
+    "ダブルトップ候補: 直近60本以内に近い高さの山が2回（4313円 / 4333円）出現。天井圏の警戒サイン候補"
+   ],
+   "edge": null,
+   "confidence_label": "",
+   "projection": {},
+   "overbought": false,
+   "overbought_reason": "",
+   "affordable_pick": false
+  },
+  {
+   "code": "4506",
+   "name": "4506",
+   "sector": "Healthcare",
+   "price": 1266.0,
+   "change_pct": -2.05,
+   "stars": 1,
+   "judgement": "売り／様子見",
+   "entry_price": 1581.5,
+   "stop_loss": 1470.8,
+   "take_profit_1": 1747.6,
+   "entry_gap_pct": 24.92,
+   "reasons": [
+    "RSI短期9本30.8/長期14本34.8は中立圏",
+    "直近足は「陰線」",
+    "参考：ボリンジャーバンド+2σは1,594.1円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
+   ],
+   "warnings": [
+    "下降のパーフェクトオーダーが成立。トレンドは弱い状態",
+    "同業種平均に-19.8%劣後。セクター内で見劣りします"
+   ],
+   "edge": null,
+   "confidence_label": "",
+   "projection": {},
+   "overbought": false,
+   "overbought_reason": "",
+   "affordable_pick": false
+  },
+  {
+   "code": "5831",
+   "name": "5831",
+   "sector": "Financial Services",
+   "price": 3257.0,
+   "change_pct": -1.0,
+   "stars": 1,
+   "judgement": "売り／様子見",
+   "entry_price": 3470.0,
+   "stop_loss": 3263.1,
+   "take_profit_1": 3780.4,
+   "entry_gap_pct": 6.54,
+   "reasons": [
+    "移動平均線は完全整列前。トレンドの土台は形成途中",
+    "RSI短期9本47.4/長期14本51.5は中立圏",
+    "直近足は「陰線」",
+    "参考：ボリンジャーバンド+2σは3,524.5円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
+   ],
+   "warnings": [
+    "同業種平均に-3.2%劣後。セクター内で見劣りします",
+    "ダブルトップ候補: 直近60本以内に近い高さの山が2回（3448円 / 3399円）出現。天井圏の警戒サイン候補"
+   ],
+   "edge": null,
+   "confidence_label": "",
+   "projection": {},
+   "overbought": false,
+   "overbought_reason": "",
+   "affordable_pick": false
+  },
+  {
+   "code": "8308",
+   "name": "8308",
+   "sector": "Financial Services",
+   "price": 2245.5,
+   "change_pct": -0.86,
+   "stars": 1,
+   "judgement": "売り／様子見",
+   "entry_price": 2420.5,
+   "stop_loss": 2263.1,
+   "take_profit_1": 2656.6,
+   "entry_gap_pct": 7.79,
+   "reasons": [
+    "移動平均線は完全整列前。トレンドの土台は形成途中",
+    "RSI短期9本42.4/長期14本47.9は中立圏",
+    "直近足は「陽線」",
+    "参考：ボリンジャーバンド+2σは2,471.1円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
+   ],
+   "warnings": [
+    "同業種平均に-4.2%劣後。セクター内で見劣りします",
+    "弱気ダイバージェンス: 株価は2,416→2,420円と高値を切り上げたのに、RSIは75.0→74.8と切り下げ（勢いの衰え）　※★には反映していません",
+    "ダブルトップ候補: 直近60本以内に近い高さの山が2回（2416円 / 2420円）出現。天井圏の警戒サイン候補"
+   ],
+   "edge": null,
+   "confidence_label": "",
+   "projection": {},
+   "overbought": false,
+   "overbought_reason": "",
+   "affordable_pick": false
+  },
+  {
+   "code": "8830",
+   "name": "8830",
+   "sector": "Real Estate",
+   "price": 3742.0,
+   "change_pct": 0.29,
+   "stars": 1,
+   "judgement": "売り／様子見",
+   "entry_price": 3952.0,
+   "stop_loss": 3731.6,
+   "take_profit_1": 4282.6,
+   "entry_gap_pct": 5.61,
+   "reasons": [
+    "移動平均線は完全整列前。トレンドの土台は形成途中",
+    "RSI短期9本48.4/長期14本48.9は中立圏",
+    "直近足は「陰線」",
+    "参考：ボリンジャーバンド+2σは3,962.4円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
+   ],
+   "warnings": [
+    "同業種平均に-5.1%劣後。セクター内で見劣りします",
+    "ダブルトップ候補: 直近60本以内に近い高さの山が2回（3952円 / 3881円）出現。天井圏の警戒サイン候補"
+   ],
+   "edge": null,
+   "confidence_label": "",
+   "projection": {},
+   "overbought": false,
+   "overbought_reason": "",
+   "affordable_pick": false
+  },
+  {
+   "code": "7741",
+   "name": "7741",
+   "sector": "Healthcare",
+   "price": 23765.0,
+   "change_pct": 0.34,
+   "stars": 1,
+   "judgement": "売り／様子見",
+   "entry_price": 26265.0,
+   "stop_loss": 24869.5,
+   "take_profit_1": 28358.2,
+   "entry_gap_pct": 10.52,
+   "reasons": [
+    "RSI短期9本30.5/長期14本35.0は中立圏",
+    "株価が-2σを下回るゾーン。統計的な売られすぎ、逆張り候補（順張り優先が原則）",
+    "直近足は「陽線」",
+    "参考：ボリンジャーバンド+2σは26,623.4円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
+   ],
+   "warnings": [
+    "下降のパーフェクトオーダーが成立。トレンドは弱い状態",
+    "同業種平均に-12.5%劣後。セクター内で見劣りします"
+   ],
+   "edge": null,
+   "confidence_label": "",
+   "projection": {},
+   "overbought": false,
+   "overbought_reason": "",
+   "affordable_pick": false
+  },
+  {
+   "code": "6471",
+   "name": "6471",
+   "sector": "Consumer Cyclical",
+   "price": 1102.0,
+   "change_pct": 0.64,
+   "stars": 1,
+   "judgement": "売り／様子見",
+   "entry_price": 1229.5,
+   "stop_loss": 1149.7,
+   "take_profit_1": 1349.2,
+   "entry_gap_pct": 11.57,
+   "reasons": [
+    "RSI短期9本42.2/長期14本43.3は中立圏",
+    "直近足は「陰線」",
+    "参考：ボリンジャーバンド+2σは1,206.9円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
+   ],
+   "warnings": [
+    "下降のパーフェクトオーダーが成立。トレンドは弱い状態",
+    "同業種平均に-4.1%劣後。セクター内で見劣りします"
+   ],
+   "edge": null,
+   "confidence_label": "",
+   "projection": {},
+   "overbought": false,
+   "overbought_reason": "",
+   "affordable_pick": false
+  },
+  {
+   "code": "8795",
+   "name": "8795",
+   "sector": "Financial Services",
+   "price": 5080.0,
+   "change_pct": 0.95,
+   "stars": 1,
+   "judgement": "売り／様子見",
+   "entry_price": 5176.0,
+   "stop_loss": 4904.1,
+   "take_profit_1": 5583.8,
+   "entry_gap_pct": 1.89,
+   "reasons": [
+    "移動平均線は完全整列前。トレンドの土台は形成途中",
+    "RSI短期9本57.2/長期14本58.4は中立圏",
+    "直近足は「陽線」",
+    "参考：ボリンジャーバンド+2σは5,211.9円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
+   ],
+   "warnings": [
+    "同業種平均に-5.2%劣後。セクター内で見劣りします",
+    "ダブルトップ候補: 直近60本以内に近い高さの山が2回（5098円 / 5065円）出現。天井圏の警戒サイン候補"
+   ],
+   "edge": null,
+   "confidence_label": "",
+   "projection": {},
+   "overbought": false,
+   "overbought_reason": "",
+   "affordable_pick": false
+  },
+  {
+   "code": "4519",
+   "name": "中外製薬",
+   "sector": "Healthcare",
+   "price": 7069.0,
+   "change_pct": 1.0,
+   "stars": 1,
+   "judgement": "売り／様子見",
+   "entry_price": 7939.0,
+   "stop_loss": 7471.5,
+   "take_profit_1": 8640.2,
+   "entry_gap_pct": 12.31,
+   "reasons": [
+    "RSI短期9本42.8/長期14本43.1は中立圏",
+    "直近足は「陰線」",
+    "ダブルボトム候補: 直近60本以内に近い安さの谷が2回（7249円 / 7105円）出現。底打ち圏の候補",
+    "参考：ボリンジャーバンド+2σは7,709.7円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
+   ],
+   "warnings": [
+    "下降のパーフェクトオーダーが成立。トレンドは弱い状態",
+    "同業種平均に-10.3%劣後。セクター内で見劣りします"
+   ],
+   "edge": null,
+   "confidence_label": "",
+   "projection": {},
+   "overbought": false,
+   "overbought_reason": "",
+   "affordable_pick": false
+  }
+ ]
+}

@@ -294,6 +294,25 @@ def build(config_json: str) -> str:
       render();
     })
     .catch(function () { /* 取得できなくても夜間バッチの価格で表示を続ける */ });
+
+  // 表示中のHTMLが古い（ブラウザのキャッシュ）場合に気づけるようにする。
+  // GitHub Pages は index.html をしばらくキャッシュするため、
+  // 分析が更新されても古いTOP5が表示され続けることがある。
+  fetch('report.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d || !d.generated_at || d.generated_at === CFG.generated_at) return;
+      var b = document.createElement('div');
+      b.className = 'stale-banner';
+      b.innerHTML = '⚠ 新しい分析（' + d.generated_at +
+        ' 時点）が公開されています。表示中はブラウザに保存された古い内容です。' +
+        '<button id="stale-reload">最新に更新する</button>';
+      document.querySelector('.app').prepend(b);
+      document.getElementById('stale-reload').onclick = function () {
+        location.replace(location.pathname + '?r=' + Date.now());
+      };
+    })
+    .catch(function () {});
 })();
 </script>"""
 
@@ -330,4 +349,8 @@ CSS = """
   line-height:1.5;background:var(--panel-alt);border:1px solid var(--border);
   color:var(--text-muted)}
 .price-status--live{border-color:var(--accent);color:var(--text)}
+.stale-banner{padding:10px 16px;background:rgba(232,163,61,.15);
+  border-bottom:1px solid var(--warn);color:var(--warn);font-size:12px;line-height:1.6}
+.stale-banner button{margin-left:10px;background:var(--warn);border:none;color:#10131a;
+  font-weight:700;border-radius:5px;padding:6px 14px;font-size:12px;cursor:pointer}
 """

@@ -12,7 +12,7 @@ on:
 
 # GitHub Pages への公開に必要な権限
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -42,6 +42,16 @@ jobs:
       - name: 株価ファイルも初期化
         # 相場中の更新ワークフローが差し替えるが、夜間時点の値を入れておく
         run: python scripts/update_prices.py
+
+      - name: 分析結果をコミット
+        # 相場中の更新ワークフローがここから読む（公開URLの取得だとCDNの
+        # 古いキャッシュで分析結果を巻き戻す事故が起きるため）
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f docs/index.html docs/report.json
+          git diff --cached --quiet || git commit -m "日次レポートを更新 [skip ci]"
+          git push
 
       - uses: actions/upload-pages-artifact@v3
         with:

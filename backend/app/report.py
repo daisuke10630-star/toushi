@@ -12,7 +12,9 @@ HTTP API を経由せず app モジュールを直接呼び出します。
 import asyncio
 import dataclasses
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
+
+JST = timezone(timedelta(hours=9))
 
 import pandas as pd
 import yfinance as yf
@@ -282,7 +284,8 @@ def build(tf=None, with_backtest: bool = True) -> dict:
 
     return {
         "stocks": stocks,
-        "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        # GitHub Actions のランナーはUTCなので、日本時間に直して表示する
+        "generated_at": datetime.now(JST).strftime("%Y-%m-%d %H:%M"),
         "data_date": max(
             (df["date"].iloc[-1] for df in raw.values()), default=None
         ),

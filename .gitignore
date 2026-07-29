@@ -16,5 +16,8 @@ __pycache__/
 frontend/node_modules/
 frontend/dist/
 
-# 生成物（GitHub Actions が作り直すのでコミット不要）
-docs/
+# 生成物のうち index.html と report.json はコミットする。
+# 相場中の株価更新ワークフローが、公開中のページを取得し直す代わりに
+# ここから読むため（CDNが古い版を返して分析結果を巻き戻す事故を防ぐ）。
+docs/prices.json
+docs/.nojekyll
