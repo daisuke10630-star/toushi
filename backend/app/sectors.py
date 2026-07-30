@@ -45,22 +45,61 @@ def save(mapping: dict[str, str]) -> None:
     )
 
 
-def build(codes: list[str], progress: bool = False) -> dict[str, str]:
-    """yfinanceから業種を取得してキャッシュを作る。失敗した銘柄はスキップする。"""
+def build(
+    codes: list[str], progress: bool = False, pause: float = 0.0, retries: int = 3
+) -> tuple[dict[str, str], set[str]]:
+    """yfinanceから業種を取得してキャッシュを作る。
+
+    **取得失敗と「業種を持たない（＝ETF等）」を区別する。**
+    ここを混同すると、レート制限で失敗しただけの普通の銘柄を
+    ETFとみなして捨ててしまう（実際に一度その事故を起こした）。
+
+    戻り値: (業種マップ, 取得できなかったコードの集合)
+    失敗したコードはキャッシュに残さないので、次回また試せる。
+    """
+    import time
+
     import yfinance as yf
 
     from .yfinance_client import to_symbol
 
     mapping = dict(_load())
+    failed: set[str] = set()
+
     for i, code in enumerate(codes, 1):
         if code in mapping:
             continue
-        try:
-            info = yf.Ticker(to_symbol(code)).get_info()
-            mapping[code] = info.get("sector") or "unknown"
-        except Exception:
-            mapping[code] = "unknown"
-        if progress and i % 20 == 0:
-            print(f"  {i}/{len(codes)} …", flush=True)
+        got = False
+        for attempt in range(retries):
+            try:
+                info = yf.Ticker(to_symbol(code)).get_info()
+                # Yahooは過負荷時、例外を出さずに中身の欠けた応答を返す。
+                # quoteType があるかどうかで「まともな応答か」を判定する。
+                # これを見ないと、throttleされただけの銘柄をETF扱いで捨ててしまう。
+                qt = info.get("quoteType")
+                sector = info.get("sector")
+                if not qt:
+                    time.sleep(2 ** attempt * max(pause, 1.0))
+                    continue
+                if qt == "EQUITY" and sector:
+                    mapping[code] = sector
+                elif qt in ("ETF", "MUTUALFUND", "INDEX"):
+                    mapping[code] = "etf"
+                else:
+                    mapping[code] = "unknown"
+                got = True
+                break
+            except Exception as e:
+                if "rate" in str(e).lower() or "429" in str(e):
+                    time.sleep(2 ** attempt * max(pause, 1.0))
+                    continue
+                break
+        if not got:
+            failed.add(code)
+        if pause:
+            time.sleep(pause)
+        if progress and i % 25 == 0:
+            print(f"  業種 {i}/{len(codes)}（未取得{len(failed)}件）", flush=True)
+
     save(mapping)
-    return mapping
+    return mapping, failed

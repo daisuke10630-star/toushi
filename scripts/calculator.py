@@ -56,6 +56,7 @@ def build(config_json: str) -> str:
 <script>
 (function () {
   var CFG = """ + config_json + """;
+  CFG.stocks = {};   // stocks.json を読み込んで埋める（HTML肥大化を避けるため別ファイル）
   var KEY = 'stock-analyzer-positions-v1';
   var $ = function (id) { return document.getElementById(id); };
 
@@ -74,16 +75,22 @@ def build(config_json: str) -> str:
     return v > 0 ? 'var(--bull)' : v < 0 ? 'var(--bear)' : 'var(--text-muted)';
   }
 
-  // 取得日以降（未指定なら直近 forward_bars 本）の高値を拾う
+  // 取得日以降（未指定なら直近 forward_bars 本）の高値を拾う。
+  // 日付は全銘柄で共有の CFG.dates を使う（配信量を減らすため銘柄ごとには持たない）。
   function peakSince(stock, since) {
-    var hi = null;
-    for (var i = 0; i < stock.highs.length; i++) {
-      if (since && stock.dates[i] < since) continue;
-      if (hi === null || stock.highs[i] > hi) hi = stock.highs[i];
+    var hi = null, i, v;
+    for (i = 0; i < stock.highs.length; i++) {
+      v = stock.highs[i];
+      if (v == null) continue;
+      if (since && CFG.dates[i] < since) continue;
+      if (hi === null || v > hi) hi = v;
     }
     if (hi === null) {
-      var tail = stock.highs.slice(-CFG.forward_bars);
-      hi = Math.max.apply(null, tail);
+      for (i = Math.max(0, stock.highs.length - CFG.forward_bars);
+           i < stock.highs.length; i++) {
+        v = stock.highs[i];
+        if (v != null && (hi === null || v > hi)) hi = v;
+      }
     }
     return hi;
   }
@@ -260,40 +267,58 @@ def build(config_json: str) -> str:
     render();
   };
 
-  // 銘柄コードの候補を用意する
-  var dl = $('calc-codes');
-  Object.keys(CFG.stocks).sort().forEach(function (c) {
-    var o = document.createElement('option');
-    o.value = c; o.label = CFG.stocks[c].name;
-    dl.appendChild(o);
-  });
+  function fillCodeList() {
+    var dl = $('calc-codes');
+    dl.innerHTML = '';
+    Object.keys(CFG.stocks).sort().forEach(function (c) {
+      var o = document.createElement('option');
+      o.value = c; o.label = CFG.stocks[c].name;
+      dl.appendChild(o);
+    });
+  }
 
-  render();
+  // 銘柄データ本体を読み込む。読み込めるまでは入力を受け付けない。
+  fetch('stocks.json?v=' + encodeURIComponent(CFG.generated_at))
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d || !d.stocks) throw new Error('empty');
+      CFG.stocks = d.stocks;
+      CFG.dates = d.dates || [];
+      fillCodeList();
+      $('calc-hint').textContent = Object.keys(CFG.stocks).length + '銘柄を読み込みました';
+      render();
+      return loadPrices();
+    })
+    .catch(function () {
+      $('calc-hint').textContent = '銘柄データを読み込めませんでした。再読み込みしてください';
+    });
 
   // 相場中に更新される prices.json を読み、株価だけ新しいものに差し替える。
   // 分析（★・エントリー目安など）は夜間バッチの結果のまま。
   // キャッシュを避けるため毎回クエリを変える。
-  fetch('prices.json?t=' + Date.now(), { cache: 'no-store' })
-    .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (d) {
-      if (!d || !d.prices) return;
-      var n = 0;
-      Object.keys(d.prices).forEach(function (code) {
-        if (CFG.stocks[code]) {
-          CFG.stocks[code].price = d.prices[code].price;
-          CFG.stocks[code].change_pct = d.prices[code].change_pct;
-          n++;
+  function loadPrices() {
+    return fetch('prices.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d || !d.prices) return;
+        var n = 0;
+        Object.keys(d.prices).forEach(function (code) {
+          if (CFG.stocks[code]) {
+            CFG.stocks[code].price = d.prices[code].price;
+            CFG.stocks[code].change_pct = d.prices[code].change_pct;
+            n++;
+          }
+        });
+        var el = $('price-status');
+        if (el) {
+          el.innerHTML = '株価は <strong>' + d.updated_at + '</strong> 時点（' + n +
+            '銘柄）。' + d.note;
+          el.classList.add('price-status--live');
         }
-      });
-      var el = $('price-status');
-      if (el) {
-        el.innerHTML = '株価は <strong>' + d.updated_at + '</strong> 時点（' + n +
-          '銘柄）。' + d.note;
-        el.classList.add('price-status--live');
-      }
-      render();
-    })
-    .catch(function () { /* 取得できなくても夜間バッチの価格で表示を続ける */ });
+        render();
+      })
+      .catch(function () { /* 取得できなくても夜間バッチの価格で表示を続ける */ });
+  }
 
   // 表示中のHTMLが古い（ブラウザのキャッシュ）場合に気づけるようにする。
   // GitHub Pages は index.html をしばらくキャッシュするため、

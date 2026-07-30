@@ -267,7 +267,6 @@ def build_html(data: dict, include_positions: bool) -> str:
     {positions_section() if include_positions else ''}
 
     {calculator.build(json.dumps({
-        "stocks": data["stocks"],
         "stop_atr_multiple": config.STOP_ATR_MULTIPLE,
         "tp1": config.TAKE_PROFIT_R_MULTIPLE_1,
         "tp2": config.TAKE_PROFIT_R_MULTIPLE_2,
@@ -301,6 +300,17 @@ def main():
     OUT_DIR.mkdir(exist_ok=True)
     (OUT_DIR / "index.html").write_text(
         build_html(data, args.with_positions), encoding="utf-8"
+    )
+
+    # 銘柄データはHTMLに埋め込まず別ファイルにする。
+    # 母集団を1000銘柄規模に広げるとHTMLが数MBになり、スマホでの表示が重くなるため。
+    # ブラウザ側でキャッシュされるので、2回目以降の読み込みは速い。
+    (OUT_DIR / "stocks.json").write_text(
+        json.dumps(
+            {"dates": data["date_axis"], "stocks": data["stocks"]},
+            ensure_ascii=False, separators=(",", ":"),
+        ),
+        encoding="utf-8",
     )
 
     payload = {

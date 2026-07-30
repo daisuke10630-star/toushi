@@ -268,7 +268,8 @@ def build(tf=None, with_backtest: bool = True) -> dict:
                 "price": round(float(latest["close"]), 1),
                 "atr": round(float(atr), 2),
                 "high20": round(float(d["high"].tail(config.BREAKOUT_LOOKBACK).max()), 1),
-                "dates": [x.strftime("%Y-%m-%d") for x in tail["date"]],
+                # 日付は銘柄間でほぼ共通なので、後で共有の日付軸に揃えて省く
+                "_dates": [x.strftime("%Y-%m-%d") for x in tail["date"]],
                 "highs": [round(float(v), 1) for v in tail["high"]],
                 "proj": {
                     "n": proj.samples,
@@ -282,7 +283,22 @@ def build(tf=None, with_backtest: bool = True) -> dict:
         except Exception:
             continue
 
+    # 日付文字列を全銘柄で持つと配信量の半分近くを占めるため、共有の日付軸に揃える。
+    # 各銘柄の高値をその軸に合わせ、無い日は null にする。
+    axis: list[str] = []
+    if stocks:
+        axis = max((s["_dates"] for s in stocks.values()), key=len)
+        index = {d: i for i, d in enumerate(axis)}
+        for s in stocks.values():
+            aligned: list[float | None] = [None] * len(axis)
+            for d, h in zip(s.pop("_dates"), s["highs"]):
+                pos = index.get(d)
+                if pos is not None:
+                    aligned[pos] = h
+            s["highs"] = aligned
+
     return {
+        "date_axis": axis,
         "stocks": stocks,
         # GitHub Actions のランナーはUTCなので、日本時間に直して表示する
         "generated_at": datetime.now(JST).strftime("%Y-%m-%d %H:%M"),
