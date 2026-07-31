@@ -22,7 +22,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
 import calculator  # noqa: E402  （scripts/ 直下）
 
-from app import config, indicators, positions, report, timeframes  # noqa: E402
+from app import config, indicators, momentum, positions, report, timeframes  # noqa: E402
 
 OUT_DIR = ROOT / "docs"
 CSS_PATH = ROOT / "frontend" / "src" / "styles.css"
@@ -123,6 +123,11 @@ def candidate_card(c, kind: str) -> str:
 
     tag = ('<span class="tag-cheap">少額枠</span>' if getattr(c, "affordable_pick", False)
            else "")
+    mom = getattr(c, "momentum_pct", 0.0)
+    mom_row = (
+        f'<div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span>'
+        f'<span class="mono">{mom:+.1f}%</span></div>' if mom else ""
+    )
     return f"""
     <div class="pos pos--{kind}">
       <div class="pos__head">
@@ -133,6 +138,7 @@ def candidate_card(c, kind: str) -> str:
         <span class="badge {'badge--buy' if kind == 'buy' else 'badge--sell'}">{esc(c.judgement)}</span>
         <span class="stars">{stars(c.stars)}</span>
       </div>
+      {mom_row}
       {rows}
       {projection_block(c.projection, c.entry_price or c.price, c.price)}
       {edge_html}
@@ -238,6 +244,20 @@ def build_html(data: dict, include_positions: bool) -> str:
 .proj__pct{{color:var(--text-muted);font-size:10px}}
 .proj__day{{margin-top:6px;padding-top:6px;border-top:1px solid var(--border)}}
 .proj__sub{{margin:0 0 3px;font-size:10px;color:var(--text-muted)}}
+.method{{margin:0 0 14px;padding:12px;border:1px solid var(--accent);border-radius:8px;
+  background:rgba(110,231,196,.06)}}
+.method__head{{margin:0 0 6px;font-size:13px;font-weight:700;color:var(--accent)}}
+.method__body{{margin:0 0 8px;font-size:11px;line-height:1.7;color:var(--text)}}
+.method__table{{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:8px}}
+.method__table th,.method__table td{{padding:4px 6px;border-bottom:1px solid var(--border);
+  text-align:right;font-family:var(--font-mono)}}
+.method__table th:first-child,.method__table td:first-child{{text-align:left;
+  font-family:var(--font-ui)}}
+.method__plus{{color:var(--bull);font-weight:700}}
+.method__note{{margin:0 0 8px;font-size:10px;line-height:1.6;color:var(--text-muted)}}
+.method__warn{{margin:0;padding:8px 10px;border-left:3px solid var(--warn);
+  background:rgba(232,163,61,.1);font-size:11px;line-height:1.7;color:var(--warn)}}
+.pos__row--mom .mono{{color:var(--bull);font-weight:700;font-size:13px}}
 .tag-cheap{{margin-left:6px;padding:1px 6px;border-radius:3px;font-size:10px;
   background:rgba(110,231,196,.15);color:var(--accent);font-weight:600}}
 </style></head><body>
@@ -276,11 +296,44 @@ def build_html(data: dict, include_positions: bool) -> str:
     }, ensure_ascii=False, separators=(",", ":")))}
 
     <section class="report-section">
-      <h2>買いシグナルが強い銘柄 TOP{config.REPORT_TOP_N}</h2>
-      <p class="report-lead">★が高く、エントリー目安まで近い順。推奨ではありません。<br>
-        RSI過熱圏・+2σ超の銘柄は除外しています。
-        「少額枠」は{config.REPORT_AFFORDABLE_PRICE:,}円以下の銘柄を確保するため、
-        順位を繰り上げたものです（そのぶん条件の揃い方は劣ります）。</p>
+      <h2>上昇が続いている銘柄 TOP{config.REPORT_TOP_N}</h2>
+
+      <div class="method">
+        <p class="method__head">選び方：過去6か月の上昇率が高い順（{config.REPORT_TOP_N}銘柄に分散）</p>
+        <p class="method__body">
+          移動平均・RSI・ボリンジャーバンドを使う選び方は、10年検証で
+          <strong>すべて単純保有に負けました</strong>。唯一勝ったのが、指標を使わず
+          「上がっている銘柄をそのまま買って持つ」この方法です。
+          ランダムに10銘柄選ぶ対照群が負けていることを確認済みで、
+          上昇相場だから勝てたのではありません。
+        </p>
+        <table class="method__table">
+          <tr><th></th><th>この方法</th><th>全銘柄を持つだけ</th><th>差</th></tr>
+          <tr><td>前半7年</td><td>+{momentum.TRACK_RECORD['前半7年']['strategy']:.2f}%</td>
+              <td>+{momentum.TRACK_RECORD['前半7年']['benchmark']:.2f}%</td>
+              <td class="method__plus">+4.13%</td></tr>
+          <tr><td>後半3年</td><td>+{momentum.TRACK_RECORD['後半3年']['strategy']:.2f}%</td>
+              <td>+{momentum.TRACK_RECORD['後半3年']['benchmark']:.2f}%</td>
+              <td class="method__plus">+24.71%</td></tr>
+        </table>
+        <p class="method__note">
+          551銘柄・10年・往復コスト0.1%込み。6か月保有あたりの平均です。
+          <strong>想定保有期間は{momentum.describe_hold(momentum.HOLD_DAYS)}</strong>で、
+          6か月ごとに入れ替えます。株価100円未満は除外しています。
+        </p>
+        <p class="method__warn">
+          ⚠ <strong>最悪の局面では-18.4%</strong>でした（全銘柄保有では-10.3%）。
+          勝率は78%で、5回に1回は6か月間マイナスです。
+          後半3年の+37%は日本株が異常に強かった時期の数字で、この水準が続く前提は危険です。
+          個別銘柄では大きく外れるため、分散して初めて成立する方法です。
+        </p>
+      </div>
+
+      <p class="report-lead">
+        ★・RSI・ボリンジャーバンドは判断材料として表示していますが、
+        <strong>この選定には一切使っていません</strong>（予測力がないと検証済みのため）。
+        「少額枠」は{config.REPORT_AFFORDABLE_PRICE:,}円以下を確保するため順位を繰り上げた銘柄です。
+      </p>
       <div class="positions__grid">{buys or '<p class="report-lead">該当なし</p>'}</div>
     </section>
   </div>

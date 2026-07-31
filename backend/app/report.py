@@ -24,6 +24,7 @@ from . import (
     config,
     features,
     indicators,
+    momentum,
     projection,
     sectors,
     signals,
@@ -55,6 +56,8 @@ class Candidate:
     overbought: bool = False
     overbought_reason: str = ""
     affordable_pick: bool = False  # 少額枠として繰り上げた銘柄か
+    momentum_pct: float = 0.0      # 過去6か月の上昇率（選定の根拠）
+    rank: int = 0                  # モメンタム順位
 
 
 def _download(codes: list[str], tf) -> dict[str, pd.DataFrame]:
@@ -134,7 +137,10 @@ def build(tf=None, with_backtest: bool = True) -> dict:
     }
 
     names = {w["code"]: w["name"] for w in config.WATCHLIST}
-    buys: list[Candidate] = []
+    # 選定はモメンタム順で行うため、★や過熱で絞らず全銘柄を候補として保持する。
+    # ★・過熱・ダイバージェンスは判断材料として表示するだけ。
+    all_candidates: dict[str, tuple[Candidate, pd.DataFrame]] = {}
+    prepared: dict[str, pd.DataFrame] = {}
     sells: list[Candidate] = []
 
     for code, df in raw.items():
@@ -166,17 +172,27 @@ def build(tf=None, with_backtest: bool = True) -> dict:
             hot, hot_reason = signals.is_overbought(latest, tf)
             cand.overbought = hot
             cand.overbought_reason = hot_reason
-            # 買われすぎは候補から外す（検証で成績が改善した）
-            if sig.stars >= 4 and not (config.EXCLUDE_OVERBOUGHT and hot):
-                buys.append((cand, d))
+
+            all_candidates[code] = (cand, d)
+            prepared[code] = d
             if sig.stars <= 2 or "売り" in sig.judgement:
                 sells.append(cand)
         except Exception:
             continue
 
-    # 買い候補は「条件が揃っていて、かつエントリーまでの距離が近い」順
-    buys.sort(key=lambda x: (-x[0].stars, abs(x[0].entry_gap_pct or 999)))
-    top_buys = buys[: config.REPORT_TOP_N]
+    # --- 銘柄選定：モメンタム（過去6か月の上昇率）順 ---
+    # テクニカル指標による選定は10年検証で単純保有に勝てなかったため廃止し、
+    # 検証で唯一一貫して勝った「過去に上がっている銘柄を買って持つ」方式に変更。
+    # ★や過熱判定は情報として残すが、選定には使わない。
+    ranked = momentum.rank_stocks(prepared)
+    top_buys: list[tuple[Candidate, pd.DataFrame]] = []
+    for rank, (code, mom) in enumerate(ranked, 1):
+        cand, d = all_candidates[code]
+        cand.momentum_pct = round(mom, 2)
+        cand.rank = rank
+        top_buys.append((cand, d))
+        if len(top_buys) >= config.REPORT_TOP_N:
+            break
 
     # 少額で買える銘柄を最低1つ確保する。順位を崩すので精度は多少落ちるが、
     # 上位が高額株ばかりだと実際に試せないため。
@@ -184,7 +200,17 @@ def build(tf=None, with_backtest: bool = True) -> dict:
     need = config.REPORT_AFFORDABLE_MIN_COUNT
     cheap_in_top = sum(1 for c, _ in top_buys if c.price <= cap)
     if cheap_in_top < need:
-        cheap = [x for x in buys[config.REPORT_TOP_N :] if x[0].price <= cap]
+        chosen = {c.code for c, _ in top_buys}
+        cheap = []
+        for rank, (code, mom) in enumerate(ranked, 1):
+            if code in chosen:
+                continue
+            cand, d = all_candidates[code]
+            if cand.price > cap:
+                continue
+            cand.momentum_pct = round(mom, 2)
+            cand.rank = rank
+            cheap.append((cand, d))
         for _ in range(need - cheap_in_top):
             if not cheap:
                 break
