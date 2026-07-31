@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-31 23:07",
+ "generated_at": "2026-08-01 02:12",
  "data_date": "2026-07-31",
  "universe_size": 605,
  "analyzed": 555,
@@ -242,21 +242,21 @@
    "warnings": [
     "ダブルトップ候補: 直近60本以内に近い高さの山が2回（4770円 / 4685円）出現。天井圏の警戒サイン候補"
    ],
-   "edge": -14.53,
-   "confidence_label": "37%（238回中88回成功）",
+   "edge": -14.58,
+   "confidence_label": "36%（242回中88回成功）",
    "projection": {
-    "samples": 238,
+    "samples": 242,
     "horizon_days": 90,
-    "up_p50": 23.13,
-    "up_p75": 44.67,
+    "up_p50": 22.7,
+    "up_p75": 44.5,
     "up_p90": 59.22,
     "down_p50": -7.84,
-    "down_p90": -24.15,
-    "end_p50": 14.65,
+    "down_p90": -24.08,
+    "end_p50": 13.37,
     "day_p50": 1.42,
     "day_p80": 2.74,
     "conditional": true,
-    "note": "過去238回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+    "note": "過去242回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
    },
    "overbought": false,
    "overbought_reason": "",
@@ -283,21 +283,21 @@
     "参考：ボリンジャーバンド+2σは25,775.3円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
    ],
    "warnings": [],
-   "edge": -24.17,
-   "confidence_label": "50%（247回中123回成功）",
+   "edge": -24.45,
+   "confidence_label": "48%（250回中119回成功）",
    "projection": {
-    "samples": 247,
+    "samples": 250,
     "horizon_days": 90,
     "up_p50": 29.23,
-    "up_p75": 93.29,
-    "up_p90": 140.05,
-    "down_p50": -7.64,
+    "up_p75": 92.21,
+    "up_p90": 138.69,
+    "down_p50": -7.92,
     "down_p90": -36.03,
-    "end_p50": 15.06,
+    "end_p50": 16.0,
     "day_p50": 2.52,
     "day_p80": 5.57,
     "conditional": true,
-    "note": "過去247回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+    "note": "過去250回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
    },
    "overbought": false,
    "overbought_reason": "",
@@ -367,21 +367,21 @@
    "warnings": [
     "同業種平均に-9.8%劣後。セクター内で見劣りします"
    ],
-   "edge": -13.47,
-   "confidence_label": "43%（363回中155回成功）",
+   "edge": -13.61,
+   "confidence_label": "41%（368回中152回成功）",
    "projection": {
-    "samples": 363,
+    "samples": 368,
     "horizon_days": 90,
-    "up_p50": 11.92,
-    "up_p75": 32.2,
+    "up_p50": 11.86,
+    "up_p75": 32.13,
     "up_p90": 60.2,
     "down_p50": -8.13,
     "down_p90": -24.54,
-    "end_p50": 4.19,
+    "end_p50": 4.0,
     "day_p50": 1.36,
     "day_p80": 3.0,
     "conditional": true,
-    "note": "過去363回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+    "note": "過去368回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
    },
    "overbought": false,
    "overbought_reason": "",
