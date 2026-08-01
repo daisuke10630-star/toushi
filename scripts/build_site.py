@@ -97,6 +97,23 @@ def projection_block(p: dict, price: float | None, current: float | None = None)
     </div>"""
 
 
+def regime_block(regime: dict) -> str:
+    """市場急落の補助シグナル。モメンタムを置き換えず、強調表示するだけ。"""
+    if not regime:
+        return ""
+    if regime.get("is_crash_day"):
+        return f'''
+    <div class="regime regime--crash">
+      <p class="regime__head">📉 本日は市場急落シグナル</p>
+      <p class="regime__body">{esc(regime.get("note", ""))}</p>
+    </div>'''
+    change = regime.get("change_pct")
+    if change is None:
+        return ""
+    return f'''
+    <p class="regime__quiet">{esc(regime.get("note", ""))}</p>'''
+
+
 def concentration_block(con: dict, total: int) -> str:
     """その日のTOP銘柄がどれくらい業種に偏っているかを示す。
 
@@ -294,6 +311,11 @@ def build_html(data: dict, include_positions: bool) -> str:
 .conc__row .mono{{text-align:right}}
 .conc__warn{{margin:8px 0 0;padding:8px 10px;border-left:3px solid var(--warn);
   background:rgba(232,163,61,.1);font-size:11px;line-height:1.7;color:var(--warn)}}
+.regime--crash{{margin:0 0 14px;padding:12px;border-radius:8px;
+  border:1px solid var(--bull);background:rgba(229,72,77,.08)}}
+.regime__head{{margin:0 0 4px;font-size:13px;font-weight:700;color:var(--bull)}}
+.regime__body{{margin:0;font-size:11px;line-height:1.7;color:var(--text)}}
+.regime__quiet{{margin:0 0 12px;font-size:10px;color:var(--text-muted)}}
 .pos__row--mom .mono{{color:var(--bull);font-weight:700;font-size:13px}}
 .tag-cheap{{margin-left:6px;padding:1px 6px;border-radius:3px;font-size:10px;
   background:rgba(110,231,196,.15);color:var(--accent);font-weight:600}}
@@ -409,6 +431,7 @@ def main():
         "data_date": str(data["data_date"].date()) if data["data_date"] is not None else None,
         "universe_size": data["universe_size"],
         "concentration": data.get("concentration"),
+        "market_regime": data.get("market_regime"),
         "analyzed": data["analyzed"],
         "top_buys": [vars(c) for c in data["top_buys"]],
         "top_sells": [vars(c) for c in data["top_sells"]],

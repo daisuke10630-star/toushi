@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-01 10:00",
+ "generated_at": "2026-08-01 23:47",
  "data_date": "2026-07-31",
  "universe_size": 605,
  "concentration": {
@@ -34,6 +34,12 @@
    "機械・電気機器",
    5
   ]
+ },
+ "market_regime": {
+  "is_crash_day": false,
+  "change_pct": 1.09,
+  "threshold_pct": -1.72,
+  "note": "本日の市場騰落率 +1.09%（急落の目安: -1.72%以下）"
  },
  "analyzed": 555,
  "top_buys": [
@@ -235,21 +241,21 @@
     "参考：ボリンジャーバンド+2σは8,237.8円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
    ],
    "warnings": [],
-   "edge": -21.33,
-   "confidence_label": "44%（128回中56回成功）",
+   "edge": -21.28,
+   "confidence_label": "44%（129回中57回成功）",
    "projection": {
-    "samples": 128,
+    "samples": 129,
     "horizon_days": 90,
-    "up_p50": 21.22,
+    "up_p50": 21.39,
     "up_p75": 38.61,
     "up_p90": 86.46,
     "down_p50": -6.75,
-    "down_p90": -28.52,
-    "end_p50": 13.53,
+    "down_p90": -28.46,
+    "end_p50": 13.39,
     "day_p50": 1.31,
     "day_p80": 3.31,
     "conditional": true,
-    "note": "過去128回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+    "note": "過去129回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
    },
    "overbought": false,
    "overbought_reason": "",
@@ -280,21 +286,21 @@
    "warnings": [
     "ダブルトップ候補: 直近60本以内に近い高さの山が2回（4770円 / 4685円）出現。天井圏の警戒サイン候補"
    ],
-   "edge": -14.51,
-   "confidence_label": "37%（241回中90回成功）",
+   "edge": -14.58,
+   "confidence_label": "37%（246回中90回成功）",
    "projection": {
-    "samples": 241,
+    "samples": 246,
     "horizon_days": 90,
     "up_p50": 23.13,
-    "up_p75": 44.67,
+    "up_p75": 43.82,
     "up_p90": 59.22,
     "down_p50": -7.84,
-    "down_p90": -24.15,
-    "end_p50": 15.78,
+    "down_p90": -23.81,
+    "end_p50": 14.65,
     "day_p50": 1.42,
     "day_p80": 2.74,
     "conditional": true,
-    "note": "過去241回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+    "note": "過去246回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
    },
    "overbought": false,
    "overbought_reason": "",
@@ -322,21 +328,21 @@
     "参考：ボリンジャーバンド+2σは25,775.3円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
    ],
    "warnings": [],
-   "edge": -24.19,
-   "confidence_label": "49%（249回中123回成功）",
+   "edge": -24.2,
+   "confidence_label": "49%（243回中119回成功）",
    "projection": {
-    "samples": 249,
+    "samples": 243,
     "horizon_days": 90,
-    "up_p50": 29.23,
-    "up_p75": 92.36,
-    "up_p90": 139.14,
-    "down_p50": -7.64,
+    "up_p50": 27.75,
+    "up_p75": 94.56,
+    "up_p90": 141.87,
+    "down_p50": -7.89,
     "down_p90": -36.03,
-    "end_p50": 15.08,
+    "end_p50": 14.56,
     "day_p50": 2.52,
     "day_p80": 5.57,
     "conditional": true,
-    "note": "過去249回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+    "note": "過去243回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
    },
    "overbought": false,
    "overbought_reason": "",
@@ -365,20 +371,20 @@
    ],
    "warnings": [],
    "edge": -14.03,
-   "confidence_label": "46%（291回中135回成功）",
+   "confidence_label": "46%（293回中136回成功）",
    "projection": {
-    "samples": 291,
+    "samples": 293,
     "horizon_days": 90,
     "up_p50": 14.17,
-    "up_p75": 30.91,
+    "up_p75": 30.37,
     "up_p90": 73.99,
     "down_p50": -4.74,
-    "down_p90": -16.15,
-    "end_p50": 7.68,
+    "down_p90": -16.07,
+    "end_p50": 7.1,
     "day_p50": 1.11,
     "day_p80": 2.86,
     "conditional": true,
-    "note": "過去291回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+    "note": "過去293回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
    },
    "overbought": false,
    "overbought_reason": "",
@@ -408,21 +414,21 @@
    "warnings": [
     "同業種平均に-9.8%劣後。セクター内で見劣りします"
    ],
-   "edge": -13.43,
-   "confidence_label": "43%（364回中157回成功）",
+   "edge": -13.39,
+   "confidence_label": "44%（370回中161回成功）",
    "projection": {
-    "samples": 364,
+    "samples": 370,
     "horizon_days": 90,
-    "up_p50": 11.92,
-    "up_p75": 32.2,
+    "up_p50": 11.63,
+    "up_p75": 32.1,
     "up_p90": 60.2,
     "down_p50": -8.13,
     "down_p90": -24.54,
-    "end_p50": 4.12,
+    "end_p50": 3.97,
     "day_p50": 1.36,
     "day_p80": 3.0,
     "conditional": true,
-    "note": "過去364回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+    "note": "過去370回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
    },
    "overbought": false,
    "overbought_reason": "",

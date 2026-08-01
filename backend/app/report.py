@@ -24,6 +24,7 @@ from . import (
     backtest,
     code_sector,
     config,
+    market_regime,
     features,
     indicators,
     momentum,
@@ -129,6 +130,8 @@ def build(tf=None, with_backtest: bool = True) -> dict:
         )
     except Exception:
         pass
+
+    regime = market_regime.evaluate(market, close_col="close")
 
     by_sector: dict[str, dict[str, pd.DataFrame]] = {}
     for code, df in raw.items():
@@ -339,6 +342,7 @@ def build(tf=None, with_backtest: bool = True) -> dict:
 
     return {
         "concentration": concentration,
+        "market_regime": vars(regime),
         "date_axis": axis,
         "stocks": stocks,
         # GitHub Actions のランナーはUTCなので、日本時間に直して表示する
