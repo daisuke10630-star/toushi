@@ -11,6 +11,7 @@ HTTP API を経由せず app モジュールを直接呼び出します。
 """
 import asyncio
 import dataclasses
+from collections import Counter
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 
@@ -21,6 +22,7 @@ import yfinance as yf
 
 from . import (
     backtest,
+    code_sector,
     config,
     features,
     indicators,
@@ -58,6 +60,7 @@ class Candidate:
     affordable_pick: bool = False  # 少額枠として繰り上げた銘柄か
     momentum_pct: float = 0.0      # 過去6か月の上昇率（選定の根拠）
     rank: int = 0                  # モメンタム順位
+    block: str = ""                # 証券コードから判定した業種ブロック
 
 
 def _download(codes: list[str], tf) -> dict[str, pd.DataFrame]:
@@ -190,6 +193,7 @@ def build(tf=None, with_backtest: bool = True) -> dict:
         cand, d = all_candidates[code]
         cand.momentum_pct = round(mom, 2)
         cand.rank = rank
+        cand.block = code_sector.block_of(code)
         top_buys.append((cand, d))
         if len(top_buys) >= config.REPORT_TOP_N:
             break
@@ -210,6 +214,7 @@ def build(tf=None, with_backtest: bool = True) -> dict:
                 continue
             cand.momentum_pct = round(mom, 2)
             cand.rank = rank
+            cand.block = code_sector.block_of(code)
             cheap.append((cand, d))
         for _ in range(need - cheap_in_top):
             if not cheap:
@@ -323,7 +328,17 @@ def build(tf=None, with_backtest: bool = True) -> dict:
                     aligned[pos] = h
             s["highs"] = aligned
 
+    # 業種の偏りを集計する。制限はしないが、偏っていることは見えるようにする。
+    # 検証では業種上限を入れると成績が悪化したため、表示のみに留める。
+    blocks = Counter(c.block for c, _ in top_buys if c.block)
+    concentration = {
+        "counts": blocks.most_common(),
+        "distinct": len(blocks),
+        "top_block": blocks.most_common(1)[0] if blocks else None,
+    }
+
     return {
+        "concentration": concentration,
         "date_axis": axis,
         "stocks": stocks,
         # GitHub Actions のランナーはUTCなので、日本時間に直して表示する

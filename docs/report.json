@@ -1,7 +1,40 @@
 {
- "generated_at": "2026-07-31 23:03",
+ "generated_at": "2026-08-01 10:00",
  "data_date": "2026-07-31",
  "universe_size": 605,
+ "concentration": {
+  "counts": [
+   [
+    "機械・電気機器",
+    5
+   ],
+   [
+    "石油・ゴム・窯業・鉄鋼・非鉄",
+    1
+   ],
+   [
+    "繊維・パルプ紙・化学",
+    1
+   ],
+   [
+    "商業・金融・不動産",
+    1
+   ],
+   [
+    "化学・医薬品",
+    1
+   ],
+   [
+    "食品",
+    1
+   ]
+  ],
+  "distinct": 6,
+  "top_block": [
+   "機械・電気機器",
+   5
+  ]
+ },
  "analyzed": 555,
  "top_buys": [
   {
@@ -45,7 +78,8 @@
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 203.34,
-   "rank": 1
+   "rank": 1,
+   "block": "機械・電気機器"
   },
   {
    "code": "6981",
@@ -68,27 +102,28 @@
    "warnings": [
     "同業種平均に-19.6%劣後。セクター内で見劣りします"
    ],
-   "edge": -14.37,
-   "confidence_label": "40%（326回中129回成功）",
+   "edge": -14.35,
+   "confidence_label": "40%（327回中130回成功）",
    "projection": {
-    "samples": 326,
+    "samples": 327,
     "horizon_days": 90,
     "up_p50": 11.01,
     "up_p75": 29.97,
-    "up_p90": 55.94,
+    "up_p90": 55.93,
     "down_p50": -7.56,
     "down_p90": -18.17,
     "end_p50": 3.27,
     "day_p50": 1.55,
     "day_p80": 3.8,
     "conditional": true,
-    "note": "過去326回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+    "note": "過去327回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
    },
    "overbought": false,
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 125.62,
-   "rank": 2
+   "rank": 2,
+   "block": "機械・電気機器"
   },
   {
    "code": "5801",
@@ -112,8 +147,8 @@
    "warnings": [
     "同業種平均に-14.5%劣後。セクター内で見劣りします"
    ],
-   "edge": -43.95,
-   "confidence_label": "45%（401回中179回成功）",
+   "edge": -43.99,
+   "confidence_label": "44%（401回中178回成功）",
    "projection": {
     "samples": 401,
     "horizon_days": 90,
@@ -121,7 +156,7 @@
     "up_p75": 69.43,
     "up_p90": 169.86,
     "down_p50": -7.22,
-    "down_p90": -17.93,
+    "down_p90": -17.99,
     "end_p50": 10.36,
     "day_p50": 2.8,
     "day_p80": 5.53,
@@ -132,7 +167,8 @@
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 122.29,
-   "rank": 3
+   "rank": 3,
+   "block": "石油・ゴム・窯業・鉄鋼・非鉄"
   },
   {
    "code": "3436",
@@ -157,26 +193,27 @@
     "弱気ダイバージェンス: 株価は5,309→5,939円と高値を切り上げたのに、RSIは75.1→64.9と切り下げ（勢いの衰え）　※★には反映していません"
    ],
    "edge": -12.16,
-   "confidence_label": "31%（367回中112回成功）",
+   "confidence_label": "30%（368回中112回成功）",
    "projection": {
-    "samples": 367,
+    "samples": 368,
     "horizon_days": 90,
     "up_p50": 8.75,
-    "up_p75": 25.44,
+    "up_p75": 25.3,
     "up_p90": 65.09,
-    "down_p50": -11.36,
+    "down_p50": -11.38,
     "down_p90": -40.5,
-    "end_p50": 0.62,
+    "end_p50": 0.54,
     "day_p50": 2.23,
     "day_p80": 4.47,
     "conditional": true,
-    "note": "過去367回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+    "note": "過去368回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
    },
    "overbought": false,
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 105.61,
-   "rank": 4
+   "rank": 4,
+   "block": "繊維・パルプ紙・化学"
   },
   {
    "code": "8050",
@@ -198,27 +235,28 @@
     "参考：ボリンジャーバンド+2σは8,237.8円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
    ],
    "warnings": [],
-   "edge": -21.28,
-   "confidence_label": "44%（129回中57回成功）",
+   "edge": -21.33,
+   "confidence_label": "44%（128回中56回成功）",
    "projection": {
-    "samples": 129,
+    "samples": 128,
     "horizon_days": 90,
-    "up_p50": 21.39,
+    "up_p50": 21.22,
     "up_p75": 38.61,
     "up_p90": 86.46,
     "down_p50": -6.75,
-    "down_p90": -28.46,
-    "end_p50": 13.39,
+    "down_p90": -28.52,
+    "end_p50": 13.53,
     "day_p50": 1.31,
     "day_p80": 3.31,
     "conditional": true,
-    "note": "過去129回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+    "note": "過去128回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
    },
    "overbought": false,
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 102.29,
-   "rank": 5
+   "rank": 5,
+   "block": "商業・金融・不動産"
   },
   {
    "code": "6752",
@@ -242,27 +280,28 @@
    "warnings": [
     "ダブルトップ候補: 直近60本以内に近い高さの山が2回（4770円 / 4685円）出現。天井圏の警戒サイン候補"
    ],
-   "edge": -14.58,
-   "confidence_label": "36%（242回中88回成功）",
+   "edge": -14.51,
+   "confidence_label": "37%（241回中90回成功）",
    "projection": {
-    "samples": 242,
+    "samples": 241,
     "horizon_days": 90,
-    "up_p50": 22.7,
-    "up_p75": 44.5,
+    "up_p50": 23.13,
+    "up_p75": 44.67,
     "up_p90": 59.22,
     "down_p50": -7.84,
-    "down_p90": -24.08,
-    "end_p50": 13.37,
+    "down_p90": -24.15,
+    "end_p50": 15.78,
     "day_p50": 1.42,
     "day_p80": 2.74,
     "conditional": true,
-    "note": "過去242回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+    "note": "過去241回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
    },
    "overbought": false,
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 101.09,
-   "rank": 6
+   "rank": 6,
+   "block": "機械・電気機器"
   },
   {
    "code": "4062",
@@ -283,27 +322,28 @@
     "参考：ボリンジャーバンド+2σは25,775.3円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）"
    ],
    "warnings": [],
-   "edge": -24.43,
-   "confidence_label": "48%（248回中119回成功）",
+   "edge": -24.19,
+   "confidence_label": "49%（249回中123回成功）",
    "projection": {
-    "samples": 248,
+    "samples": 249,
     "horizon_days": 90,
     "up_p50": 29.23,
-    "up_p75": 92.83,
-    "up_p90": 139.6,
-    "down_p50": -7.92,
+    "up_p75": 92.36,
+    "up_p90": 139.14,
+    "down_p50": -7.64,
     "down_p90": -36.03,
-    "end_p50": 15.07,
+    "end_p50": 15.08,
     "day_p50": 2.52,
     "day_p80": 5.57,
     "conditional": true,
-    "note": "過去248回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+    "note": "過去249回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
    },
    "overbought": false,
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 98.79,
-   "rank": 7
+   "rank": 7,
+   "block": "化学・医薬品"
   },
   {
    "code": "6134",
@@ -344,7 +384,8 @@
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 92.36,
-   "rank": 8
+   "rank": 8,
+   "block": "機械・電気機器"
   },
   {
    "code": "6480",
@@ -367,27 +408,28 @@
    "warnings": [
     "同業種平均に-9.8%劣後。セクター内で見劣りします"
    ],
-   "edge": -13.55,
-   "confidence_label": "42%（367回中154回成功）",
+   "edge": -13.43,
+   "confidence_label": "43%（364回中157回成功）",
    "projection": {
-    "samples": 367,
+    "samples": 364,
     "horizon_days": 90,
-    "up_p50": 11.8,
-    "up_p75": 32.15,
+    "up_p50": 11.92,
+    "up_p75": 32.2,
     "up_p90": 60.2,
     "down_p50": -8.13,
     "down_p90": -24.54,
-    "end_p50": 3.99,
+    "end_p50": 4.12,
     "day_p50": 1.36,
     "day_p80": 3.0,
     "conditional": true,
-    "note": "過去367回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
+    "note": "過去364回の同型シグナル（高値ブレイク）で実際に約定した場合の分布"
    },
    "overbought": false,
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 89.67,
-   "rank": 9
+   "rank": 9,
+   "block": "機械・電気機器"
   },
   {
    "code": "2371",
@@ -429,7 +471,8 @@
    "overbought_reason": "RSI短期 71.0 が過熱圏（70以上）",
    "affordable_pick": false,
    "momentum_pct": 77.13,
-   "rank": 10
+   "rank": 10,
+   "block": "食品"
   }
  ],
  "top_sells": [
@@ -460,7 +503,8 @@
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 0.0,
-   "rank": 0
+   "rank": 0,
+   "block": ""
   },
   {
    "code": "8802",
@@ -491,7 +535,8 @@
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 0.0,
-   "rank": 0
+   "rank": 0,
+   "block": ""
   },
   {
    "code": "6349",
@@ -521,7 +566,8 @@
    "overbought_reason": "RSI短期 75.9 が過熱圏（70以上）",
    "affordable_pick": false,
    "momentum_pct": 0.0,
-   "rank": 0
+   "rank": 0,
+   "block": ""
   },
   {
    "code": "4506",
@@ -551,7 +597,8 @@
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 0.0,
-   "rank": 0
+   "rank": 0,
+   "block": ""
   },
   {
    "code": "2206",
@@ -580,7 +627,8 @@
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 0.0,
-   "rank": 0
+   "rank": 0,
+   "block": ""
   },
   {
    "code": "4574",
@@ -610,7 +658,8 @@
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 0.0,
-   "rank": 0
+   "rank": 0,
+   "block": ""
   },
   {
    "code": "8830",
@@ -642,7 +691,8 @@
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 0.0,
-   "rank": 0
+   "rank": 0,
+   "block": ""
   },
   {
    "code": "4519",
@@ -672,7 +722,8 @@
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 0.0,
-   "rank": 0
+   "rank": 0,
+   "block": ""
   },
   {
    "code": "9049",
@@ -701,7 +752,8 @@
    "overbought_reason": "",
    "affordable_pick": false,
    "momentum_pct": 0.0,
-   "rank": 0
+   "rank": 0,
+   "block": ""
   },
   {
    "code": "8074",
@@ -731,7 +783,8 @@
    "overbought_reason": "RSI短期 80.3 が過熱圏（70以上）",
    "affordable_pick": false,
    "momentum_pct": 0.0,
-   "rank": 0
+   "rank": 0,
+   "block": ""
   }
  ]
 }

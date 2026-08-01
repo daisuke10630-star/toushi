@@ -97,6 +97,33 @@ def projection_block(p: dict, price: float | None, current: float | None = None)
     </div>"""
 
 
+def concentration_block(con: dict, total: int) -> str:
+    """その日のTOP銘柄がどれくらい業種に偏っているかを示す。
+
+    業種上限は設けない（検証で成績が悪化したため）。偏りを見せるだけ。
+    """
+    if not con or not con.get("counts"):
+        return ""
+    top = con.get("top_block")
+    bars = "".join(
+        f'<div class="conc__row"><span>{esc(name)}</span>'
+        f'<span class="conc__bar"><i style="width:{n / total * 100:.0f}%"></i></span>'
+        f'<span class="mono">{n}銘柄</span></div>'
+        for name, n in con["counts"]
+    )
+    warn = ""
+    if top and top[1] >= 4:
+        warn = (f'<p class="conc__warn">⚠ {esc(top[0])}に{top[1]}銘柄が集中しています。'
+                f'この業種が売られると、まとめて下落します。'
+                f'（業種を散らす制限も検証しましたが、成績が悪化したため入れていません）</p>')
+    return f'''
+    <div class="conc">
+      <p class="conc__head">業種の偏り（{con["distinct"]}業種に分散）</p>
+      {bars}
+      {warn}
+    </div>'''
+
+
 def candidate_card(c, kind: str) -> str:
     edge_html = ""
     if c.edge is not None:
@@ -132,7 +159,7 @@ def candidate_card(c, kind: str) -> str:
     <div class="pos pos--{kind}">
       <div class="pos__head">
         <span class="pos__name">{esc(c.name)}{tag}</span>
-        <span class="mono pos__code">{esc(c.code)}｜{esc(c.sector)}</span>
+        <span class="mono pos__code">{esc(c.code)}｜{esc(getattr(c, 'block', '') or c.sector)}</span>
       </div>
       <div class="star-badge star-badge--compact">
         <span class="badge {'badge--buy' if kind == 'buy' else 'badge--sell'}">{esc(c.judgement)}</span>
@@ -257,6 +284,16 @@ def build_html(data: dict, include_positions: bool) -> str:
 .method__note{{margin:0 0 8px;font-size:10px;line-height:1.6;color:var(--text-muted)}}
 .method__warn{{margin:0;padding:8px 10px;border-left:3px solid var(--warn);
   background:rgba(232,163,61,.1);font-size:11px;line-height:1.7;color:var(--warn)}}
+.conc{{margin:0 0 14px;padding:10px 12px;border:1px solid var(--border);
+  border-radius:8px;background:var(--panel)}}
+.conc__head{{margin:0 0 6px;font-size:12px;font-weight:700}}
+.conc__row{{display:grid;grid-template-columns:1fr 90px 55px;gap:8px;align-items:center;
+  font-size:11px;padding:2px 0;color:var(--text-muted)}}
+.conc__bar{{background:var(--bg);border-radius:3px;height:8px;overflow:hidden}}
+.conc__bar i{{display:block;height:100%;background:var(--accent)}}
+.conc__row .mono{{text-align:right}}
+.conc__warn{{margin:8px 0 0;padding:8px 10px;border-left:3px solid var(--warn);
+  background:rgba(232,163,61,.1);font-size:11px;line-height:1.7;color:var(--warn)}}
 .pos__row--mom .mono{{color:var(--bull);font-weight:700;font-size:13px}}
 .tag-cheap{{margin-left:6px;padding:1px 6px;border-radius:3px;font-size:10px;
   background:rgba(110,231,196,.15);color:var(--accent);font-weight:600}}
@@ -334,6 +371,7 @@ def build_html(data: dict, include_positions: bool) -> str:
         <strong>この選定には一切使っていません</strong>（予測力がないと検証済みのため）。
         「少額枠」は{config.REPORT_AFFORDABLE_PRICE:,}円以下を確保するため順位を繰り上げた銘柄です。
       </p>
+      {concentration_block(data.get('concentration'), len(data['top_buys']) or 1)}
       <div class="positions__grid">{buys or '<p class="report-lead">該当なし</p>'}</div>
     </section>
   </div>
@@ -370,6 +408,7 @@ def main():
         "generated_at": data["generated_at"],
         "data_date": str(data["data_date"].date()) if data["data_date"] is not None else None,
         "universe_size": data["universe_size"],
+        "concentration": data.get("concentration"),
         "analyzed": data["analyzed"],
         "top_buys": [vars(c) for c in data["top_buys"]],
         "top_sells": [vars(c) for c in data["top_sells"]],
