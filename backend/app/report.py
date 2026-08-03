@@ -24,6 +24,8 @@ from . import (
     backtest,
     code_sector,
     config,
+    etf_timing,
+    gap_momentum,
     market_regime,
     features,
     indicators,
@@ -186,10 +188,28 @@ def build(tf=None, with_backtest: bool = True) -> dict:
         except Exception:
             continue
 
-    # --- 銘柄選定：モメンタム（過去6か月の上昇率）順 ---
-    # テクニカル指標による選定は10年検証で単純保有に勝てなかったため廃止し、
-    # 検証で唯一一貫して勝った「過去に上がっている銘柄を買って持つ」方式に変更。
-    # ★や過熱判定は情報として残すが、選定には使わない。
+    # --- 主力①：ETF×米国前日終値タイミング ---
+    etf_status = etf_timing.status()
+
+    # --- 主力②：決算モメンタム（窓開け急騰）近似 ---
+    gap_picks = gap_momentum.scan(prepared)
+    for p in gap_picks:
+        p.name = names.get(p.code, p.code)
+        p.sector = sectors.get(p.code)
+        p.block = code_sector.block_of(p.code)
+        if p.name == p.code:
+            try:
+                from .screener import _resolve_name
+
+                p.name = _resolve_name(p.code)
+            except Exception:
+                pass
+
+    # --- 補助：モメンタム（過去6か月の上昇率）順 ---
+    # かつての主力。個別銘柄の値動きが大きく最悪期-18.4%（5回に1回は
+    # 6か月マイナス）だったため、ETF×先物タイミングと決算モメンタムを
+    # 主力に切り替え、こちらは参考情報の位置づけに変更した。
+    # 選定ロジック自体は変えていない（検証で唯一一貫して単純保有を上回った方式）。
     ranked = momentum.rank_stocks(prepared)
     top_buys: list[tuple[Candidate, pd.DataFrame]] = []
     for rank, (code, mom) in enumerate(ranked, 1):
@@ -343,6 +363,8 @@ def build(tf=None, with_backtest: bool = True) -> dict:
     return {
         "concentration": concentration,
         "market_regime": vars(regime),
+        "etf_timing": vars(etf_status),
+        "gap_picks": gap_picks,
         "date_axis": axis,
         "stocks": stocks,
         # GitHub Actions のランナーはUTCなので、日本時間に直して表示する

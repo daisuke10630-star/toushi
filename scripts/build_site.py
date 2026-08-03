@@ -23,7 +23,9 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import calculator  # noqa: E402  （scripts/ 直下）
 import update_button  # noqa: E402  （scripts/ 直下）
 
-from app import config, indicators, momentum, positions, report, timeframes  # noqa: E402
+from app import (  # noqa: E402
+    config, etf_timing, gap_momentum, indicators, momentum, positions, report, timeframes,
+)
 
 OUT_DIR = ROOT / "docs"
 CSS_PATH = ROOT / "frontend" / "src" / "styles.css"
@@ -113,6 +115,53 @@ def regime_block(regime: dict) -> str:
         return ""
     return f'''
     <p class="regime__quiet">{esc(regime.get("note", ""))}</p>'''
+
+
+def etf_timing_block(et: dict) -> str:
+    """主力①：ETF×米国前日終値タイミングの現在の状態。"""
+    if not et or not et.get("available"):
+        return '<p class="report-lead">ETFタイミングのデータを取得できませんでした。</p>'
+    state = "買い持ち" if et.get("in_market") else "様子見（現金）"
+    cls = "etf--in" if et.get("in_market") else "etf--out"
+    action_cls = "etf__action--changed" if et.get("changed") else "etf__action--hold"
+    return f"""
+    <div class="etf {cls}">
+      <p class="etf__state">現在の判定： <strong>{esc(state)}</strong>
+        （{esc(et.get('signal_date', ''))}の米国市場終値時点）</p>
+      <p class="etf__body">{esc(et.get('note', ''))}</p>
+      <p class="etf__action {action_cls}">{esc(et.get('action_note', ''))}</p>
+      <div class="pos__row"><span>{esc(etf_timing.ETF_SYMBOL)} 現在値</span>
+        <span class="mono">{yen(et.get('etf_price'))}（{pct(et.get('etf_change_pct'))}）</span></div>
+    </div>"""
+
+
+def gap_pick_card(p) -> str:
+    return f"""
+    <div class="pos pos--buy">
+      <div class="pos__head">
+        <span class="pos__name">{esc(p.name)}</span>
+        <span class="mono pos__code">{esc(p.code)}｜{esc(p.block or p.sector)}</span>
+      </div>
+      <div class="pos__row"><span>現在値</span>
+        <span class="mono">{yen(p.current_price)}（{pct(p.change_pct)}）</span></div>
+      <div class="pos__row"><span>急騰発生日</span>
+        <span class="mono">{esc(p.entry_date)}（窓開け{pct(p.gap_pct)}）</span></div>
+      <div class="pos__row"><span>エントリー価格</span><span class="mono">{yen(p.entry_price)}</span></div>
+      <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
+        <span class="mono" style="color:{'var(--bull)' if p.return_pct > 0 else 'var(--bear)'}">
+        {pct(p.return_pct)}</span></div>
+      <div class="pos__row"><span>保有</span>
+        <span class="mono">{p.days_held}営業日経過／残り{p.days_remaining}営業日目安</span></div>
+    </div>"""
+
+
+def gap_picks_block(picks: list) -> str:
+    """主力②：決算モメンタム（窓開け急騰）近似の現在アクティブな銘柄一覧。"""
+    if not picks:
+        return ('<p class="report-lead">現在、該当する急騰銘柄はありません。'
+                '資金はETF×先物タイミングのポジションで待機します。</p>')
+    cards = "".join(gap_pick_card(p) for p in picks)
+    return f'<div class="positions__grid">{cards}</div>'
 
 
 def concentration_block(con: dict, total: int) -> str:
@@ -321,6 +370,16 @@ def build_html(data: dict, include_positions: bool) -> str:
 .pos__row--mom .mono{{color:var(--bull);font-weight:700;font-size:13px}}
 .tag-cheap{{margin-left:6px;padding:1px 6px;border-radius:3px;font-size:10px;
   background:rgba(110,231,196,.15);color:var(--accent);font-weight:600}}
+.etf{{margin:0 0 14px;padding:12px;border-radius:8px;border:1px solid var(--border)}}
+.etf--in{{border-color:var(--bull);background:rgba(229,72,77,.06)}}
+.etf--out{{border-color:var(--border);background:var(--panel)}}
+.etf__state{{margin:0 0 4px;font-size:14px;font-weight:700}}
+.etf__body{{margin:0 0 8px;font-size:11px;line-height:1.6;color:var(--text-muted)}}
+.etf__action{{margin:0 0 10px;padding:8px 10px;border-radius:6px;font-size:11px;line-height:1.7}}
+.etf__action--changed{{background:rgba(232,163,61,.15);border-left:3px solid var(--warn);color:var(--warn)}}
+.etf__action--hold{{background:var(--bg);border-left:3px solid var(--border);color:var(--text-muted)}}
+.report-section--muted{{margin-top:28px;padding-top:16px;border-top:1px solid var(--border)}}
+.report-section--muted h2{{color:var(--text-muted);font-size:13px}}
 </style></head><body>
 <div class="app">
   <header class="app__header">
@@ -358,7 +417,73 @@ def build_html(data: dict, include_positions: bool) -> str:
     }, ensure_ascii=False, separators=(",", ":")))}
 
     <section class="report-section">
-      <h2>上昇が続いている銘柄 TOP{config.REPORT_TOP_N}</h2>
+      <h2>主力① ETF×米国前日終値タイミング</h2>
+      <p class="report-lead">
+        前営業日の米国市場（S&amp;P500）の騰落を見て、日経225連動ETFを
+        買い持ちするか様子見（現金）するかを切り替える方式。
+        ±{etf_timing.THRESHOLD:.1%}未満の小さな変動では前日の状態を維持します。
+      </p>
+      <div class="method">
+        <p class="method__head">検証結果（{etf_timing.ETF_SYMBOL}・17年・片道0.3%のコスト＋実現益課税込み）</p>
+        <table class="method__table">
+          <tr><th></th><th>この方法</th><th>単純保有</th></tr>
+          <tr><td>全期間</td><td>+{etf_timing.TRACK_RECORD['全期間']['strategy']:,.0f}%</td>
+              <td>+{etf_timing.TRACK_RECORD['全期間']['benchmark']:,.0f}%</td></tr>
+          <tr><td>前半70%</td><td>+{etf_timing.TRACK_RECORD['前半70%']['strategy']:,.0f}%</td>
+              <td>+{etf_timing.TRACK_RECORD['前半70%']['benchmark']:,.0f}%</td></tr>
+          <tr><td>後半30%</td><td>+{etf_timing.TRACK_RECORD['後半30%']['strategy']:,.0f}%</td>
+              <td>+{etf_timing.TRACK_RECORD['後半30%']['benchmark']:,.0f}%</td></tr>
+        </table>
+        <p class="method__note">
+          {etf_timing.TRACK_RECORD['win_years']}で単純保有を上回りました。最大ドローダウンも
+          単純保有(-25〜-31%)よりずっと浅い(-8〜-13%)。
+        </p>
+        <p class="method__warn">
+          ⚠ 単一のETFに全額を賭ける形になるため、モメンタムの10銘柄分散とは異なる
+          リスク（市場全体のシステミックショック）を負います。過去の相関に基づく
+          統計的な傾向であり、将来この関係が続く保証はありません。
+        </p>
+      </div>
+      {etf_timing_block(data.get('etf_timing'))}
+    </section>
+
+    <section class="report-section">
+      <h2>主力② 決算モメンタム（窓開け急騰）近似</h2>
+      <p class="report-lead">
+        前日終値比+{gap_momentum.GAP_THRESHOLD:.0%}以上の窓開けを急騰イベントとみなし、
+        発生から{gap_momentum.HOLD_DAYS}営業日を目安に保有します。
+        決算カレンダーやPTS(夜間取引)データが無いための近似指標で、
+        決算以外の材料による窓開けも混ざります。
+        決算集中期は該当銘柄が多くなりすぎるため、直近{gap_momentum.MAX_DISPLAY}件に絞って
+        表示しています（検証はイベント単位の平均で行っており、
+        「これらを全部同時に保有できるか」自体は検証していません）。
+      </p>
+      <div class="method">
+        <p class="method__head">検証結果（241銘柄・10年・片道0.3%のコスト＋実現益課税込み・重複除去後）</p>
+        <table class="method__table">
+          <tr><th></th><th>イベント後平均</th><th>同銘柄ランダム日</th></tr>
+          <tr><td>全期間</td><td>+{gap_momentum.TRACK_RECORD['全期間']['strategy']:.2f}%</td>
+              <td>+{gap_momentum.TRACK_RECORD['全期間']['benchmark']:.2f}%</td></tr>
+          <tr><td>前半70%</td><td>+{gap_momentum.TRACK_RECORD['前半70%']['strategy']:.2f}%</td>
+              <td>+{gap_momentum.TRACK_RECORD['前半70%']['benchmark']:.2f}%</td></tr>
+          <tr><td>後半30%</td><td>+{gap_momentum.TRACK_RECORD['後半30%']['strategy']:.2f}%</td>
+              <td>+{gap_momentum.TRACK_RECORD['後半30%']['benchmark']:.2f}%</td></tr>
+        </table>
+        <p class="method__warn">
+          ⚠ 該当銘柄がない日は資金の置き場がないため、主力①（ETF×先物タイミング）の
+          ポジションで待機する設計です。
+        </p>
+      </div>
+      {gap_picks_block(data.get('gap_picks') or [])}
+    </section>
+
+    <section class="report-section report-section--muted">
+      <h2>参考：モメンタム（旧主力）</h2>
+      <p class="report-lead">
+        個別銘柄の値動きが大きく、最悪期-18.4%（5回に1回は6か月マイナス）という
+        リスクがあるため、主力からは外しました。選定ロジック自体は今も有効な
+        検証結果に基づいており、参考情報として引き続き表示します。
+      </p>
 
       <div class="method">
         <p class="method__head">選び方：過去6か月の上昇率が高い順（{config.REPORT_TOP_N}銘柄に分散）</p>
@@ -435,6 +560,8 @@ def main():
         "universe_size": data["universe_size"],
         "concentration": data.get("concentration"),
         "market_regime": data.get("market_regime"),
+        "etf_timing": data.get("etf_timing"),
+        "gap_picks": [vars(p) for p in (data.get("gap_picks") or [])],
         "analyzed": data["analyzed"],
         "top_buys": [vars(c) for c in data["top_buys"]],
         "top_sells": [vars(c) for c in data["top_sells"]],
