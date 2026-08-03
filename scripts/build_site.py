@@ -21,6 +21,7 @@ sys.path.insert(0, str(ROOT / "backend"))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
 import calculator  # noqa: E402  （scripts/ 直下）
+import update_button  # noqa: E402  （scripts/ 直下）
 
 from app import config, indicators, momentum, positions, report, timeframes  # noqa: E402
 
@@ -279,6 +280,7 @@ def build_html(data: dict, include_positions: bool) -> str:
 .snap-warn{{margin:0;padding-top:10px;padding-bottom:10px;font-size:11px;
   color:var(--warn);background:rgba(232,163,61,.1);border-bottom:1px solid var(--border);line-height:1.6}}
 {calculator.CSS}
+{update_button.CSS}
 .proj{{margin:8px 0;padding:8px 10px;border-radius:6px;background:var(--bg);
   border:1px solid var(--border)}}
 .proj__head{{margin:0 0 4px;font-size:11px;font-weight:700;color:var(--accent)}}
@@ -343,6 +345,7 @@ def build_html(data: dict, include_positions: bool) -> str:
     保有上限 {tf.forward_bars}日</p>
 
   <div class="app__body">
+    {update_button.build()}
     {positions_section() if include_positions else ''}
 
     {calculator.build(json.dumps({
