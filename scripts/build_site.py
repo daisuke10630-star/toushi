@@ -423,6 +423,12 @@ def build_html(data: dict, include_positions: bool) -> str:
         買い持ちするか様子見（現金）するかを切り替える方式。
         ±{etf_timing.THRESHOLD:.1%}未満の小さな変動では前日の状態を維持します。
       </p>
+      <p class="report-lead" style="color:var(--warn)">
+        ⚠ 自動バッチ（毎朝6:10 JST目標）はGitHub Actionsの仕様上、数時間〜半日
+        遅れることがあり寄り付きに間に合わない日があります。実際に売買判断へ
+        使うときは、寄り付き前に必ず「最新データに更新」ボタンを押して
+        確定させてください。自動バッチは保険程度に考えてください。
+      </p>
       <div class="method">
         <p class="method__head">検証結果（{etf_timing.ETF_SYMBOL}・17年・片道0.3%のコスト＋実現益課税込み）</p>
         <table class="method__table">
