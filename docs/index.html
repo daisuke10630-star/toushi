@@ -1062,10 +1062,10 @@ body {
     <div>
       <h1>日本株テクニカル分析 日次レポート</h1>
       <p class="app__subtitle">605銘柄をスキャン
-        （分析成功 551銘柄）</p>
+        （分析成功 550銘柄）</p>
     </div>
-    <div class="app__status"><span class="mono">データ基準日 2026-10-27／
-      生成 2026-10-27 09:22</span></div>
+    <div class="app__status"><span class="mono">データ基準日 2026-10-28／
+      生成 2026-10-28 09:28</span></div>
   </header>
 
   <p class="snap-warn">⚠ これは投資助言ではありません。「シグナルが強い」とは
@@ -1220,7 +1220,7 @@ body {
 
 <script>
 (function () {
-  var CFG = {"stop_atr_multiple":2.0,"tp1":1.5,"tp2":2.0,"forward_bars":90,"is_trailing":true,"generated_at":"2026-10-27 09:22"};
+  var CFG = {"stop_atr_multiple":2.0,"tp1":1.5,"tp2":2.0,"forward_bars":90,"is_trailing":true,"generated_at":"2026-10-28 09:28"};
   CFG.stocks = {};   // stocks.json を読み込んで埋める（HTML肥大化を避けるため別ファイル）
   var KEY = 'stock-analyzer-positions-v1';
   var $ = function (id) { return document.getElementById(id); };
@@ -1541,13 +1541,13 @@ body {
         </p>
       </div>
       
-    <div class="etf etf--out">
-      <p class="etf__state">現在の判定： <strong>様子見（現金）</strong>
-        （2026-10-23の米国市場終値時点）</p>
-      <p class="etf__body">米国市場（2026-10-23終値時点）が-0.52%。現在の判定は「様子見（現金）」です。</p>
-      <p class="etf__action etf__action--hold">前回と状態は同じです。既に様子見（現金）なら、そのまま保有を続けてください（新たな売買は不要です）。</p>
+    <div class="etf etf--in">
+      <p class="etf__state">現在の判定： <strong>買い持ち</strong>
+        （2026-10-26の米国市場終値時点）</p>
+      <p class="etf__body">米国市場（2026-10-26終値時点）が+0.70%。現在の判定は「買い持ち」です。</p>
+      <p class="etf__action etf__action--changed">⚠ 前回から状態が切り替わりました。本日の東証の寄り付き（9:00頃）で買ってください。</p>
       <div class="pos__row"><span>1321.T 現在値</span>
-        <span class="mono">648.4円（-0.72%）</span></div>
+        <span class="mono">659.5円（+1.71%）</span></div>
     </div>
     </section>
 
@@ -1581,19 +1581,35 @@ body {
       <div class="positions__grid">
     <div class="pos pos--buy">
       <div class="pos__head">
+        <span class="pos__name">Anritsu Corporation</span>
+        <span class="mono pos__code">6754｜機械・電気機器</span>
+      </div>
+      <div class="pos__row"><span>現在値</span>
+        <span class="mono">2,932.5円（+3.09%）</span></div>
+      <div class="pos__row"><span>急騰発生日</span>
+        <span class="mono">2026-10-27（窓開け+7.96%）</span></div>
+      <div class="pos__row"><span>エントリー価格</span><span class="mono">2,844.5円</span></div>
+      <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
+        <span class="mono" style="color:var(--bull)">
+        +3.09%</span></div>
+      <div class="pos__row"><span>保有</span>
+        <span class="mono">1営業日経過／残り59営業日目安</span></div>
+    </div>
+    <div class="pos pos--buy">
+      <div class="pos__head">
         <span class="pos__name">Takara Holdings Inc.</span>
         <span class="mono pos__code">2531｜食品</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">2,722.0円（-0.07%）</span></div>
+        <span class="mono">2,708.0円（-0.9%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-10-26（窓開け+7.91%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">2,724.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bear)">
-        -0.07%</span></div>
+        -0.59%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">1営業日経過／残り59営業日目安</span></div>
+        <span class="mono">2営業日経過／残り58営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1601,15 +1617,15 @@ body {
         <span class="mono pos__code">4506｜化学・医薬品</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">1,867.0円（+1.61%）</span></div>
+        <span class="mono">1,961.0円（+1.92%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-10-15（窓開け+10.06%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">1,842.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bull)">
-        +1.36%</span></div>
+        +6.46%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">8営業日経過／残り52営業日目安</span></div>
+        <span class="mono">9営業日経過／残り51営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1617,15 +1633,15 @@ body {
         <span class="mono pos__code">7581｜輸送用機器・精密機器</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">7,760.0円（-2.14%）</span></div>
+        <span class="mono">7,930.0円（+1.02%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-10-15（窓開け+11.45%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">7,050.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bull)">
-        +10.07%</span></div>
+        +12.48%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">8営業日経過／残り52営業日目安</span></div>
+        <span class="mono">9営業日経過／残り51営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1633,15 +1649,15 @@ body {
         <span class="mono pos__code">6814｜機械・電気機器</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">7,760.0円（+3.88%）</span></div>
+        <span class="mono">7,840.0円（-0.88%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-10-13（窓開け+7.19%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">8,060.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bear)">
-        -3.72%</span></div>
+        -2.73%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">10営業日経過／残り50営業日目安</span></div>
+        <span class="mono">11営業日経過／残り49営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1649,15 +1665,15 @@ body {
         <span class="mono pos__code">4592｜化学・医薬品</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">901.0円（+0.11%）</span></div>
+        <span class="mono">976.0円（+4.95%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-10-06（窓開け+7.84%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">1,002.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bear)">
-        -10.08%</span></div>
+        -2.59%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">14営業日経過／残り46営業日目安</span></div>
+        <span class="mono">15営業日経過／残り45営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1665,15 +1681,15 @@ body {
         <span class="mono pos__code">6301｜機械・電気機器</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">6,767.0円（+0.5%）</span></div>
+        <span class="mono">6,774.0円（-0.6%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-10-05（窓開け+6.0%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">7,777.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bear)">
-        -12.99%</span></div>
+        -12.9%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">15営業日経過／残り45営業日目安</span></div>
+        <span class="mono">16営業日経過／残り44営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1681,15 +1697,15 @@ body {
         <span class="mono pos__code">4552｜化学・医薬品</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">507.0円（-1.93%）</span></div>
+        <span class="mono">523.0円（+2.55%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-10-05（窓開け+13.64%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">503.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bull)">
-        +0.8%</span></div>
+        +3.98%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">15営業日経過／残り45営業日目安</span></div>
+        <span class="mono">16営業日経過／残り44営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1697,15 +1713,15 @@ body {
         <span class="mono pos__code">6652｜機械・電気機器</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">3,615.0円（+2.7%）</span></div>
+        <span class="mono">3,585.0円（+0.56%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-10-05（窓開け+9.03%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">4,060.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bear)">
-        -10.96%</span></div>
+        -11.7%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">15営業日経過／残り45営業日目安</span></div>
+        <span class="mono">16営業日経過／残り44営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1713,15 +1729,15 @@ body {
         <span class="mono pos__code">8628｜商業・金融・不動産</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">1,044.0円（+0.1%）</span></div>
+        <span class="mono">1,030.0円（+0.78%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-10-01（窓開け+6.78%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">1,131.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bear)">
-        -7.69%</span></div>
+        -8.93%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">17営業日経過／残り43営業日目安</span></div>
+        <span class="mono">18営業日経過／残り42営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1729,15 +1745,15 @@ body {
         <span class="mono pos__code">9519｜運輸・情報通信・電力・サービス</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">739.0円（+0.27%）</span></div>
+        <span class="mono">744.0円（+1.36%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-10-01（窓開け+8.44%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">847.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bear)">
-        -12.75%</span></div>
+        -12.16%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">17営業日経過／残り43営業日目安</span></div>
+        <span class="mono">18営業日経過／残り42営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1745,15 +1761,15 @@ body {
         <span class="mono pos__code">8766｜商業・金融・不動産</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">574.4円（-1.78%）</span></div>
+        <span class="mono">568.2円（-1.8%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-09-29（窓開け+27.48%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">523.2円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bull)">
-        +9.79%</span></div>
+        +8.6%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">19営業日経過／残り41営業日目安</span></div>
+        <span class="mono">20営業日経過／残り40営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1761,15 +1777,15 @@ body {
         <span class="mono pos__code">7282｜輸送用機器・精密機器</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">1,005.5円（+1.0%）</span></div>
+        <span class="mono">1,022.5円（+1.84%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-09-29（窓開け+6.22%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">1,017.5円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
-        <span class="mono" style="color:var(--bear)">
-        -1.18%</span></div>
+        <span class="mono" style="color:var(--bull)">
+        +0.49%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">19営業日経過／残り41営業日目安</span></div>
+        <span class="mono">20営業日経過／残り40営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1777,15 +1793,15 @@ body {
         <span class="mono pos__code">8377｜商業・金融・不動産</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">714.0円（+2.13%）</span></div>
+        <span class="mono">742.2円（+0.61%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-09-29（窓開け+6.64%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">838.4円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bear)">
-        -14.84%</span></div>
+        -11.47%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">19営業日経過／残り41営業日目安</span></div>
+        <span class="mono">20営業日経過／残り40営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1793,15 +1809,15 @@ body {
         <span class="mono pos__code">9065｜運輸・情報通信・電力・サービス</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">1,641.0円（-0.82%）</span></div>
+        <span class="mono">1,652.0円（-0.18%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-09-29（窓開け+6.58%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">1,567.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bull)">
-        +4.72%</span></div>
+        +5.42%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">19営業日経過／残り41営業日目安</span></div>
+        <span class="mono">20営業日経過／残り40営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1809,15 +1825,15 @@ body {
         <span class="mono pos__code">5541｜石油・ゴム・窯業・鉄鋼・非鉄</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">2,229.0円（+1.04%）</span></div>
+        <span class="mono">2,270.0円（+1.52%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-09-25（窓開け+5.26%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">2,647.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bear)">
-        -15.79%</span></div>
+        -14.24%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">21営業日経過／残り39営業日目安</span></div>
+        <span class="mono">22営業日経過／残り38営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1825,15 +1841,15 @@ body {
         <span class="mono pos__code">6217｜機械・電気機器</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">659.0円（+3.29%）</span></div>
+        <span class="mono">675.0円（+3.37%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-09-18（窓開け+5.77%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">800.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bear)">
-        -17.62%</span></div>
+        -15.62%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">23営業日経過／残り37営業日目安</span></div>
+        <span class="mono">24営業日経過／残り36営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1841,15 +1857,15 @@ body {
         <span class="mono pos__code">6208｜機械・電気機器</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">1,605.0円（+0.06%）</span></div>
+        <span class="mono">1,681.0円（+2.94%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-09-14（窓開け+6.31%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">1,730.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bear)">
-        -7.23%</span></div>
+        -2.83%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">27営業日経過／残り33営業日目安</span></div>
+        <span class="mono">28営業日経過／残り32営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1857,15 +1873,15 @@ body {
         <span class="mono pos__code">6203｜機械・電気機器</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">2,196.0円（-3.64%）</span></div>
+        <span class="mono">2,286.0円（+0.35%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-09-08（窓開け+11.51%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">2,148.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bull)">
-        +2.23%</span></div>
+        +6.42%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">31営業日経過／残り29営業日目安</span></div>
+        <span class="mono">32営業日経過／残り28営業日目安</span></div>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1873,31 +1889,15 @@ body {
         <span class="mono pos__code">3038｜繊維・パルプ紙・化学</span>
       </div>
       <div class="pos__row"><span>現在値</span>
-        <span class="mono">2,988.0円（-0.4%）</span></div>
+        <span class="mono">2,980.0円（+0.57%）</span></div>
       <div class="pos__row"><span>急騰発生日</span>
         <span class="mono">2026-09-04（窓開け+7.14%）</span></div>
       <div class="pos__row"><span>エントリー価格</span><span class="mono">3,032.0円</span></div>
       <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
         <span class="mono" style="color:var(--bear)">
-        -1.45%</span></div>
+        -1.72%</span></div>
       <div class="pos__row"><span>保有</span>
-        <span class="mono">33営業日経過／残り27営業日目安</span></div>
-    </div>
-    <div class="pos pos--buy">
-      <div class="pos__head">
-        <span class="pos__name">Sansan, Inc.</span>
-        <span class="mono pos__code">4443｜化学・医薬品</span>
-      </div>
-      <div class="pos__row"><span>現在値</span>
-        <span class="mono">2,140.0円（-0.6%）</span></div>
-      <div class="pos__row"><span>急騰発生日</span>
-        <span class="mono">2026-09-04（窓開け+5.02%）</span></div>
-      <div class="pos__row"><span>エントリー価格</span><span class="mono">2,228.0円</span></div>
-      <div class="pos__row pos__row--pnl"><span>エントリーからの騰落率</span>
-        <span class="mono" style="color:var(--bear)">
-        -3.95%</span></div>
-      <div class="pos__row"><span>保有</span>
-        <span class="mono">33営業日経過／残り27営業日目安</span></div>
+        <span class="mono">34営業日経過／残り26営業日目安</span></div>
     </div></div>
     </section>
 
@@ -1947,8 +1947,8 @@ body {
       </p>
       
     <div class="conc">
-      <p class="conc__head">業種の偏り（5業種に分散）</p>
-      <div class="conc__row"><span>機械・電気機器</span><span class="conc__bar"><i style="width:30%"></i></span><span class="mono">3銘柄</span></div><div class="conc__row"><span>化学・医薬品</span><span class="conc__bar"><i style="width:20%"></i></span><span class="mono">2銘柄</span></div><div class="conc__row"><span>商業・金融・不動産</span><span class="conc__bar"><i style="width:20%"></i></span><span class="mono">2銘柄</span></div><div class="conc__row"><span>輸送用機器・精密機器</span><span class="conc__bar"><i style="width:20%"></i></span><span class="mono">2銘柄</span></div><div class="conc__row"><span>石油・ゴム・窯業・鉄鋼・非鉄</span><span class="conc__bar"><i style="width:10%"></i></span><span class="mono">1銘柄</span></div>
+      <p class="conc__head">業種の偏り（6業種に分散）</p>
+      <div class="conc__row"><span>機械・電気機器</span><span class="conc__bar"><i style="width:30%"></i></span><span class="mono">3銘柄</span></div><div class="conc__row"><span>化学・医薬品</span><span class="conc__bar"><i style="width:20%"></i></span><span class="mono">2銘柄</span></div><div class="conc__row"><span>商業・金融・不動産</span><span class="conc__bar"><i style="width:20%"></i></span><span class="mono">2銘柄</span></div><div class="conc__row"><span>石油・ゴム・窯業・鉄鋼・非鉄</span><span class="conc__bar"><i style="width:10%"></i></span><span class="mono">1銘柄</span></div><div class="conc__row"><span>輸送用機器・精密機器</span><span class="conc__bar"><i style="width:10%"></i></span><span class="mono">1銘柄</span></div><div class="conc__row"><span>運輸・情報通信・電力・サービス</span><span class="conc__bar"><i style="width:10%"></i></span><span class="mono">1銘柄</span></div>
       
     </div>
       <div class="positions__grid">
@@ -1961,23 +1961,23 @@ body {
         <span class="badge badge--buy">買い</span>
         <span class="stars"><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span></span>
       </div>
-      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+155.4%</span></div>
-      <div class="pos__row"><span>現在値</span><span class="mono">19,050.0円（-0.03%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">19,560.0円（現在値+2.68%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">18,476.0円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">21,186.0円</span></div>
+      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+160.8%</span></div>
+      <div class="pos__row"><span>現在値</span><span class="mono">19,030.0円（+1.63%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">19,560.0円（現在値+2.79%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">18,483.7円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">21,174.4円</span></div>
       
     <div class="proj">
-      <p class="proj__head">過去82回の実測（90日以内・同型シグナル）</p>
-      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">23,415円<span class="proj__pct">（+19.7%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">25,361円<span class="proj__pct">（+29.7%）</span></span></div>
+      <p class="proj__head">過去73回の実測（90日以内・同型シグナル）</p>
+      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">23,462円<span class="proj__pct">（+19.9%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">25,401円<span class="proj__pct">（+29.9%）</span></span></div>
       <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">26,778円<span class="proj__pct">（+36.9%）</span></span></div>
-      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">17,090円<span class="proj__pct">（-12.6%）</span></span></div>
-      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">13,903円<span class="proj__pct">（-28.9%）</span></span></div>
-      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 19,050円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">18,736 〜 19,364円<span class="proj__pct">（±314円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">18,414 〜 19,686円<span class="proj__pct">（±636円）</span></span></div></div>
+      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">17,121円<span class="proj__pct">（-12.5%）</span></span></div>
+      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">13,938円<span class="proj__pct">（-28.7%）</span></span></div>
+      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 19,030円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">18,716 〜 19,344円<span class="proj__pct">（±314円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">18,396 〜 19,664円<span class="proj__pct">（±634円）</span></span></div></div>
       <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
         そこで売らなければ利益は確定しません。</p>
     </div>
-      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-14.12%）</p></div>
-      <ul class="conf__caveats"><li>パーフェクトオーダー成立（株価＞5日線＞25日線＞80日線＞120日線）</li><li>同業種平均を+16.1%上回る。セクター内で優位</li><li>直近足は「陽線」</li><li>ダブルボトム候補: 直近60本以内に近い安さの谷が2回（15982円 / 16245円）出現。底打ち圏の候補</li></ul>
-      <ul class="conf__caveats" style="color:var(--warn)"><li>RSI短期9本79.0/長期14本72.7と過熱圏（しきい値70）。飛びつきは非推奨</li></ul>
+      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-14.49%）</p></div>
+      <ul class="conf__caveats"><li>パーフェクトオーダー成立（株価＞5日線＞25日線＞80日線＞120日線）</li><li>同業種平均を+13.2%上回る。セクター内で優位</li><li>直近足は「陽線」</li><li>ダブルボトム候補: 直近60本以内に近い安さの谷が2回（15982円 / 16245円）出現。底打ち圏の候補</li></ul>
+      <ul class="conf__caveats" style="color:var(--warn)"><li>RSI短期9本70.4/長期14本68.7と過熱圏（しきい値70）。飛びつきは非推奨</li></ul>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -1988,23 +1988,23 @@ body {
         <span class="badge badge--buy">買い</span>
         <span class="stars"><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span></span>
       </div>
-      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+123.0%</span></div>
-      <div class="pos__row"><span>現在値</span><span class="mono">11,590.0円（+0.78%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">11,890.0円（現在値+2.59%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">11,028.6円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">13,182.1円</span></div>
+      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+129.7%</span></div>
+      <div class="pos__row"><span>現在値</span><span class="mono">11,530.0円（-0.82%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">11,895.0円（現在値+3.17%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">10,999.6円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">13,238.1円</span></div>
       
     <div class="proj">
-      <p class="proj__head">過去54回の実測（90日以内・同型シグナル）</p>
-      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">14,518円<span class="proj__pct">（+22.1%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">15,344円<span class="proj__pct">（+29.1%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">16,733円<span class="proj__pct">（+40.7%）</span></span></div>
-      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">10,392円<span class="proj__pct">（-12.6%）</span></span></div>
-      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">8,681円<span class="proj__pct">（-27.0%）</span></span></div>
-      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 11,590円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">11,415 〜 11,765円<span class="proj__pct">（±175円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">11,189 〜 11,991円<span class="proj__pct">（±401円）</span></span></div></div>
+      <p class="proj__head">過去61回の実測（90日以内・同型シグナル）</p>
+      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">13,887円<span class="proj__pct">（+16.8%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">15,178円<span class="proj__pct">（+27.6%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">16,425円<span class="proj__pct">（+38.1%）</span></span></div>
+      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">10,136円<span class="proj__pct">（-14.8%）</span></span></div>
+      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">7,268円<span class="proj__pct">（-38.9%）</span></span></div>
+      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 11,530円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">11,356 〜 11,704円<span class="proj__pct">（±174円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">11,131 〜 11,929円<span class="proj__pct">（±399円）</span></span></div></div>
       <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
         そこで売らなければ利益は確定しません。</p>
     </div>
-      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-10.63%）</p></div>
-      <ul class="conf__caveats"><li>パーフェクトオーダー成立（株価＞5日線＞25日線＞80日線＞120日線）</li><li>同業種平均を+58.6%上回る。セクター内で優位</li><li>直近足は「陽線」</li><li>参考：ボリンジャーバンド+2σは11,994.8円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）</li></ul>
-      <ul class="conf__caveats" style="color:var(--warn)"><li>RSI短期9本93.3/長期14本88.5と過熱圏（しきい値70）。飛びつきは非推奨</li></ul>
+      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-10.92%）</p></div>
+      <ul class="conf__caveats"><li>パーフェクトオーダー成立（株価＞5日線＞25日線＞80日線＞120日線）</li><li>同業種平均を+56.7%上回る。セクター内で優位</li><li>直近足は「陽線」</li><li>参考：ボリンジャーバンド+2σは12,259.7円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）</li></ul>
+      <ul class="conf__caveats" style="color:var(--warn)"><li>RSI短期9本88.8/長期14本85.8と過熱圏（しきい値70）。飛びつきは非推奨</li></ul>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -2013,79 +2013,25 @@ body {
       </div>
       <div class="star-badge star-badge--compact">
         <span class="badge badge--buy">監視</span>
-        <span class="stars"><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star">★</span></span>
+        <span class="stars"><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star">★</span><span class="star">★</span></span>
       </div>
-      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+85.1%</span></div>
-      <div class="pos__row"><span>現在値</span><span class="mono">4,130.0円（-0.96%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">4,330.0円（現在値+4.84%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">3,946.3円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">4,905.5円</span></div>
+      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+88.0%</span></div>
+      <div class="pos__row"><span>現在値</span><span class="mono">4,260.0円（+2.04%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">4,330.0円（現在値+1.64%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">3,950.6円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">4,899.1円</span></div>
       
     <div class="proj">
-      <p class="proj__head">過去115回の実測（90日以内・同型シグナル）</p>
-      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">4,723円<span class="proj__pct">（+9.1%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">5,238円<span class="proj__pct">（+21.0%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">5,594円<span class="proj__pct">（+29.2%）</span></span></div>
-      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">3,280円<span class="proj__pct">（-24.3%）</span></span></div>
-      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">2,906円<span class="proj__pct">（-32.9%）</span></span></div>
-      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 4,130円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">4,047 〜 4,213円<span class="proj__pct">（±83円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">3,967 〜 4,293円<span class="proj__pct">（±163円）</span></span></div></div>
+      <p class="proj__head">過去304回の実測（90日以内・同型シグナル）</p>
+      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">4,812円<span class="proj__pct">（+11.1%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">5,393円<span class="proj__pct">（+24.6%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">5,791円<span class="proj__pct">（+33.7%）</span></span></div>
+      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">3,522円<span class="proj__pct">（-18.7%）</span></span></div>
+      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">2,956円<span class="proj__pct">（-31.7%）</span></span></div>
+      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 4,260円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">4,174 〜 4,346円<span class="proj__pct">（±86円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">4,092 〜 4,428円<span class="proj__pct">（±168円）</span></span></div></div>
       <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
         そこで売らなければ利益は確定しません。</p>
     </div>
-      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-5.59%）</p></div>
-      <ul class="conf__caveats"><li>パーフェクトオーダー成立（株価＞5日線＞25日線＞80日線＞120日線）</li><li>直近足は「陰線」</li><li>参考：ボリンジャーバンド+2σは4,146.4円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）</li></ul>
-      <ul class="conf__caveats" style="color:var(--warn)"><li>RSI短期9本73.7/長期14本67.5と過熱圏（しきい値70）。飛びつきは非推奨</li></ul>
-    </div>
-    <div class="pos pos--buy">
-      <div class="pos__head">
-        <span class="pos__name">Tokai Carbon Co., Ltd.</span>
-        <span class="mono pos__code">5301｜石油・ゴム・窯業・鉄鋼・非鉄</span>
-      </div>
-      <div class="star-badge star-badge--compact">
-        <span class="badge badge--buy">監視</span>
-        <span class="stars"><span class="star star--on">★</span><span class="star star--on">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></span>
-      </div>
-      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+82.6%</span></div>
-      <div class="pos__row"><span>現在値</span><span class="mono">1,899.0円（+2.18%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">2,423.0円（現在値+27.59%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">2,252.8円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">2,678.3円</span></div>
-      
-    <div class="proj">
-      <p class="proj__head">過去331回の実測（90日以内・同型シグナル）</p>
-      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">2,620円<span class="proj__pct">（+8.1%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">2,922円<span class="proj__pct">（+20.6%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">4,026円<span class="proj__pct">（+66.1%）</span></span></div>
-      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">2,156円<span class="proj__pct">（-11.0%）</span></span></div>
-      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">1,935円<span class="proj__pct">（-20.1%）</span></span></div>
-      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 1,899円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">1,881 〜 1,917円<span class="proj__pct">（±18円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">1,859 〜 1,939円<span class="proj__pct">（±40円）</span></span></div></div>
-      <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
-        そこで売らなければ利益は確定しません。</p>
-    </div>
-      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-7.20%）</p></div>
-      <ul class="conf__caveats"><li>移動平均線は完全整列前。トレンドの土台は形成途中</li><li>RSI短期9本31.6/長期14本37.8は中立圏</li><li>直近足は「陽線」</li><li>参考：ボリンジャーバンド+2σは2,515.6円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）</li></ul>
-      <ul class="conf__caveats" style="color:var(--warn)"><li>同業種平均に-10.3%劣後。セクター内で見劣りします</li><li>弱気ダイバージェンス: 株価は2,364→2,423円と高値を切り上げたのに、RSIは78.2→77.1と切り下げ（勢いの衰え）　※★には反映していません</li></ul>
-    </div>
-    <div class="pos pos--buy">
-      <div class="pos__head">
-        <span class="pos__name">Tachibana Eletech Co., Ltd.</span>
-        <span class="mono pos__code">8159｜商業・金融・不動産</span>
-      </div>
-      <div class="star-badge star-badge--compact">
-        <span class="badge badge--buy">監視</span>
-        <span class="stars"><span class="star star--on">★</span><span class="star star--on">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></span>
-      </div>
-      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+80.0%</span></div>
-      <div class="pos__row"><span>現在値</span><span class="mono">5,080.0円（+2.52%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">5,130.0円（現在値+0.98%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">4,816.2円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">5,600.7円</span></div>
-      
-    <div class="proj">
-      <p class="proj__head">過去425回の実測（90日以内・同型シグナル）</p>
-      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">5,819円<span class="proj__pct">（+13.4%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">6,170円<span class="proj__pct">（+20.3%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">7,492円<span class="proj__pct">（+46.0%）</span></span></div>
-      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">4,863円<span class="proj__pct">（-5.2%）</span></span></div>
-      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">4,358円<span class="proj__pct">（-15.0%）</span></span></div>
-      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 5,080円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">5,033 〜 5,127円<span class="proj__pct">（±47円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">4,981 〜 5,179円<span class="proj__pct">（±99円）</span></span></div></div>
-      <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
-        そこで売らなければ利益は確定しません。</p>
-    </div>
-      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-11.39%）</p></div>
-      <ul class="conf__caveats"><li>パーフェクトオーダー成立（株価＞5日線＞25日線＞80日線＞120日線）</li><li>直近足は「陽線」</li><li>参考：ボリンジャーバンド+2σは4,990.7円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）</li></ul>
-      <ul class="conf__caveats" style="color:var(--warn)"><li>RSI短期9本77.5/長期14本74.2と過熱圏（しきい値70）。飛びつきは非推奨</li><li>株価が+2σを上回るゾーン。急な反落リスクに警戒（バンドウォークの可能性も）</li><li>ダブルトップ候補: 直近60本以内に近い高さの山が2回（4800円 / 4780円）出現。天井圏の警戒サイン候補</li></ul>
+      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-4.17%）</p></div>
+      <ul class="conf__caveats"><li>パーフェクトオーダー成立（株価＞5日線＞25日線＞80日線＞120日線）</li><li>直近足は「陽線」</li><li>参考：ボリンジャーバンド+2σは4,214.0円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）</li></ul>
+      <ul class="conf__caveats" style="color:var(--warn)"><li>RSI短期9本81.4/長期14本72.7と過熱圏（しきい値70）。飛びつきは非推奨</li><li>株価が+2σを上回るゾーン。急な反落リスクに警戒（バンドウォークの可能性も）</li></ul>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -2096,104 +2042,77 @@ body {
         <span class="badge badge--buy">監視</span>
         <span class="stars"><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star">★</span><span class="star">★</span></span>
       </div>
-      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+79.4%</span></div>
-      <div class="pos__row"><span>現在値</span><span class="mono">10,530.0円（+4.57%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">11,350.0円（現在値+7.79%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">10,289.7円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">12,940.4円</span></div>
+      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+84.2%</span></div>
+      <div class="pos__row"><span>現在値</span><span class="mono">10,680.0円（+2.01%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">11,350.0円（現在値+6.27%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">10,292.2円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">12,936.7円</span></div>
       
     <div class="proj">
-      <p class="proj__head">過去323回の実測（90日以内・同型シグナル）</p>
-      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">14,007円<span class="proj__pct">（+23.4%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">19,062円<span class="proj__pct">（+68.0%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">21,163円<span class="proj__pct">（+86.5%）</span></span></div>
-      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">10,493円<span class="proj__pct">（-7.5%）</span></span></div>
+      <p class="proj__head">過去322回の実測（90日以内・同型シグナル）</p>
+      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">13,963円<span class="proj__pct">（+23.0%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">19,105円<span class="proj__pct">（+68.3%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">21,155円<span class="proj__pct">（+86.4%）</span></span></div>
+      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">10,494円<span class="proj__pct">（-7.5%）</span></span></div>
       <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">8,321円<span class="proj__pct">（-26.7%）</span></span></div>
-      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 10,530円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">10,384 〜 10,676円<span class="proj__pct">（±146円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">10,155 〜 10,905円<span class="proj__pct">（±375円）</span></span></div></div>
+      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 10,680円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">10,532 〜 10,828円<span class="proj__pct">（±148円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">10,303 〜 11,057円<span class="proj__pct">（±377円）</span></span></div></div>
       <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
         そこで売らなければ利益は確定しません。</p>
     </div>
       <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-24.29%）</p></div>
-      <ul class="conf__caveats"><li>移動平均線は完全整列前。トレンドの土台は形成途中</li><li>RSI短期9本55.1/長期14本53.4は中立圏</li><li>直近足は「陽線」</li><li>参考：ボリンジャーバンド+2σは11,174.2円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）</li></ul>
+      <ul class="conf__caveats"><li>移動平均線は完全整列前。トレンドの土台は形成途中</li><li>RSI短期9本57.7/長期14本55.1は中立圏</li><li>直近足は「陰線」</li><li>参考：ボリンジャーバンド+2σは11,173.3円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）</li></ul>
       
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
-        <span class="pos__name">Brother Industries, Ltd.</span>
-        <span class="mono pos__code">6448｜機械・電気機器</span>
-      </div>
-      <div class="star-badge star-badge--compact">
-        <span class="badge badge--buy">監視</span>
-        <span class="stars"><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star">★</span></span>
-      </div>
-      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+66.8%</span></div>
-      <div class="pos__row"><span>現在値</span><span class="mono">4,886.0円（+1.35%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">4,900.0円（現在値+0.29%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">4,696.2円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">5,205.7円</span></div>
-      
-    <div class="proj">
-      <p class="proj__head">過去186回の実測（90日以内・同型シグナル）</p>
-      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">5,514円<span class="proj__pct">（+12.5%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">5,854円<span class="proj__pct">（+19.5%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">6,235円<span class="proj__pct">（+27.2%）</span></span></div>
-      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">4,484円<span class="proj__pct">（-8.5%）</span></span></div>
-      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">3,911円<span class="proj__pct">（-20.2%）</span></span></div>
-      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 4,886円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">4,844 〜 4,928円<span class="proj__pct">（±42円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">4,799 〜 4,973円<span class="proj__pct">（±87円）</span></span></div></div>
-      <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
-        そこで売らなければ利益は確定しません。</p>
-    </div>
-      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-7.81%）</p></div>
-      <ul class="conf__caveats"><li>パーフェクトオーダー成立（株価＞5日線＞25日線＞80日線＞120日線）</li><li>直近足は「陰線」</li><li>ダブルボトム候補: 直近60本以内に近い安さの谷が2回（4554円 / 4506円）出現。底打ち圏の候補</li><li>参考：ボリンジャーバンド+2σは4,869.1円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）</li></ul>
-      <ul class="conf__caveats" style="color:var(--warn)"><li>RSI短期9本70.9/長期14本65.5と過熱圏（しきい値70）。飛びつきは非推奨</li><li>株価が+2σを上回るゾーン。急な反落リスクに警戒（バンドウォークの可能性も）</li></ul>
-    </div>
-    <div class="pos pos--buy">
-      <div class="pos__head">
-        <span class="pos__name">BANDAI NAMCO Holdings Inc.</span>
-        <span class="mono pos__code">7832｜輸送用機器・精密機器</span>
-      </div>
-      <div class="star-badge star-badge--compact">
-        <span class="badge badge--buy">監視</span>
-        <span class="stars"><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star">★</span></span>
-      </div>
-      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+66.3%</span></div>
-      <div class="pos__row"><span>現在値</span><span class="mono">6,160.0円（-2.11%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">6,528.0円（現在値+5.97%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">6,175.8円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">7,056.3円</span></div>
-      
-    <div class="proj">
-      <p class="proj__head">過去116回の実測（90日以内・同型シグナル）</p>
-      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">7,173円<span class="proj__pct">（+9.9%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">7,492円<span class="proj__pct">（+14.8%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">9,050円<span class="proj__pct">（+38.6%）</span></span></div>
-      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">5,781円<span class="proj__pct">（-11.4%）</span></span></div>
-      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">5,370円<span class="proj__pct">（-17.7%）</span></span></div>
-      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 6,160円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">6,090 〜 6,230円<span class="proj__pct">（±70円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">6,024 〜 6,296円<span class="proj__pct">（±136円）</span></span></div></div>
-      <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
-        そこで売らなければ利益は確定しません。</p>
-    </div>
-      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-5.64%）</p></div>
-      <ul class="conf__caveats"><li>移動平均線は完全整列前。トレンドの土台は形成途中</li><li>RSI短期9本55.7/長期14本60.2は中立圏</li><li>同業種平均を+11.7%上回る。セクター内で優位</li><li>直近足は「陰線」</li></ul>
-      
-    </div>
-    <div class="pos pos--buy">
-      <div class="pos__head">
-        <span class="pos__name">Yamaha Motor Co., Ltd.</span>
-        <span class="mono pos__code">7272｜輸送用機器・精密機器</span>
+        <span class="pos__name">Tachibana Eletech Co., Ltd.</span>
+        <span class="mono pos__code">8159｜商業・金融・不動産</span>
       </div>
       <div class="star-badge star-badge--compact">
         <span class="badge badge--buy">監視</span>
         <span class="stars"><span class="star star--on">★</span><span class="star star--on">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></span>
       </div>
-      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+66.2%</span></div>
-      <div class="pos__row"><span>現在値</span><span class="mono">1,781.0円（-0.72%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">1,888.0円（現在値+6.01%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">1,805.0円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">2,012.5円</span></div>
+      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+79.7%</span></div>
+      <div class="pos__row"><span>現在値</span><span class="mono">5,080.0円（+0.99%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">5,130.0円（現在値+0.98%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">4,830.1円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">5,579.8円</span></div>
       
     <div class="proj">
-      <p class="proj__head">過去394回の実測（90日以内・同型シグナル）</p>
-      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">2,105円<span class="proj__pct">（+11.5%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">2,269円<span class="proj__pct">（+20.2%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">2,457円<span class="proj__pct">（+30.2%）</span></span></div>
-      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">1,731円<span class="proj__pct">（-8.3%）</span></span></div>
-      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">1,388円<span class="proj__pct">（-26.5%）</span></span></div>
-      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 1,781円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">1,763 〜 1,799円<span class="proj__pct">（±18円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">1,744 〜 1,818円<span class="proj__pct">（±37円）</span></span></div></div>
+      <p class="proj__head">過去421回の実測（90日以内・同型シグナル）</p>
+      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">5,884円<span class="proj__pct">（+14.7%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">6,199円<span class="proj__pct">（+20.8%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">7,558円<span class="proj__pct">（+47.3%）</span></span></div>
+      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">4,863円<span class="proj__pct">（-5.2%）</span></span></div>
+      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">4,370円<span class="proj__pct">（-14.8%）</span></span></div>
+      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 5,080円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">5,033 〜 5,127円<span class="proj__pct">（±47円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">4,982 〜 5,178円<span class="proj__pct">（±98円）</span></span></div></div>
       <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
         そこで売らなければ利益は確定しません。</p>
     </div>
-      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-7.53%）</p></div>
-      <ul class="conf__caveats"><li>移動平均線は完全整列前。トレンドの土台は形成途中</li><li>RSI短期9本43.2/長期14本46.3は中立圏</li><li>直近足は「陰線」</li><li>参考：ボリンジャーバンド+2σは1,868.7円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）</li></ul>
-      <ul class="conf__caveats" style="color:var(--warn)"><li>ダブルトップ候補: 直近60本以内に近い高さの山が2回（1855円 / 1888円）出現。天井圏の警戒サイン候補</li></ul>
+      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-11.26%）</p></div>
+      <ul class="conf__caveats"><li>パーフェクトオーダー成立（株価＞5日線＞25日線＞80日線＞120日線）</li><li>直近足は「陽線」</li><li>参考：ボリンジャーバンド+2σは5,049.3円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）</li></ul>
+      <ul class="conf__caveats" style="color:var(--warn)"><li>RSI短期9本77.7/長期14本74.3と過熱圏（しきい値70）。飛びつきは非推奨</li><li>株価が+2σを上回るゾーン。急な反落リスクに警戒（バンドウォークの可能性も）</li><li>ダブルトップ候補: 直近60本以内に近い高さの山が2回（4800円 / 4780円）出現。天井圏の警戒サイン候補</li></ul>
+    </div>
+    <div class="pos pos--buy">
+      <div class="pos__head">
+        <span class="pos__name">Tokai Carbon Co., Ltd.</span>
+        <span class="mono pos__code">5301｜石油・ゴム・窯業・鉄鋼・非鉄</span>
+      </div>
+      <div class="star-badge star-badge--compact">
+        <span class="badge badge--buy">監視</span>
+        <span class="stars"><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star">★</span><span class="star">★</span></span>
+      </div>
+      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+78.7%</span></div>
+      <div class="pos__row"><span>現在値</span><span class="mono">1,976.0円（+2.2%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">2,423.0円（現在値+22.62%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">2,252.9円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">2,678.1円</span></div>
+      
+    <div class="proj">
+      <p class="proj__head">過去218回の実測（90日以内・同型シグナル）</p>
+      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">2,623円<span class="proj__pct">（+8.3%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">2,922円<span class="proj__pct">（+20.6%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">3,327円<span class="proj__pct">（+37.3%）</span></span></div>
+      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">2,161円<span class="proj__pct">（-10.8%）</span></span></div>
+      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">1,944円<span class="proj__pct">（-19.8%）</span></span></div>
+      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 1,976円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">1,957 〜 1,995円<span class="proj__pct">（±19円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">1,934 〜 2,018円<span class="proj__pct">（±42円）</span></span></div></div>
+      <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
+        そこで売らなければ利益は確定しません。</p>
+    </div>
+      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-7.31%）</p></div>
+      <ul class="conf__caveats"><li>移動平均線は完全整列前。トレンドの土台は形成途中</li><li>RSI短期9本43.0/長期14本44.7は中立圏</li><li>直近足は「陰線」</li><li>ダブルボトム候補: 直近60本以内に近い安さの谷が2回（1776円 / 1788円）出現。底打ち圏の候補</li></ul>
+      <ul class="conf__caveats" style="color:var(--warn)"><li>同業種平均に-13.2%劣後。セクター内で見劣りします</li><li>弱気ダイバージェンス: 株価は2,364→2,423円と高値を切り上げたのに、RSIは78.2→77.1と切り下げ（勢いの衰え）　※★には反映していません</li></ul>
     </div>
     <div class="pos pos--buy">
       <div class="pos__head">
@@ -2204,22 +2123,103 @@ body {
         <span class="badge badge--buy">買い</span>
         <span class="stars"><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span></span>
       </div>
-      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+66.2%</span></div>
-      <div class="pos__row"><span>現在値</span><span class="mono">2,140.0円（-0.6%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">2,246.0円（現在値+4.95%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">2,043.1円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">2,550.4円</span></div>
+      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+78.0%</span></div>
+      <div class="pos__row"><span>現在値</span><span class="mono">2,231.0円（+2.67%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">2,246.0円（現在値+0.67%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">2,041.6円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">2,552.6円</span></div>
       
     <div class="proj">
-      <p class="proj__head">過去26回の実測（90日以内・同型シグナル）</p>
-      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">2,416円<span class="proj__pct">（+7.6%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">2,752円<span class="proj__pct">（+22.6%）</span></span></div>
-      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">2,870円<span class="proj__pct">（+27.8%）</span></span></div>
-      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">1,828円<span class="proj__pct">（-18.6%）</span></span></div>
-      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">1,426円<span class="proj__pct">（-36.5%）</span></span></div>
-      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 2,140円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">2,106 〜 2,174円<span class="proj__pct">（±34円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">2,066 〜 2,214円<span class="proj__pct">（±74円）</span></span></div></div>
+      <p class="proj__head">過去27回の実測（90日以内・同型シグナル）</p>
+      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">2,456円<span class="proj__pct">（+9.3%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">2,870円<span class="proj__pct">（+27.8%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">3,162円<span class="proj__pct">（+40.8%）</span></span></div>
+      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">1,858円<span class="proj__pct">（-17.3%）</span></span></div>
+      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">1,470円<span class="proj__pct">（-34.5%）</span></span></div>
+      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 2,231円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">2,196 〜 2,266円<span class="proj__pct">（±35円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">2,154 〜 2,308円<span class="proj__pct">（±77円）</span></span></div></div>
       <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
         そこで売らなければ利益は確定しません。</p>
     </div>
-      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-10.00%）</p></div>
-      <ul class="conf__caveats"><li>パーフェクトオーダー成立（株価＞5日線＞25日線＞80日線＞120日線）</li><li>RSI短期9本58.7/長期14本55.5は中立圏</li><li>直近足は「陽線」</li><li>参考：ボリンジャーバンド+2σは2,217.7円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）</li></ul>
+      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-9.64%）</p></div>
+      <ul class="conf__caveats"><li>パーフェクトオーダー成立（株価＞5日線＞25日線＞80日線＞120日線）</li><li>RSI短期9本68.7/長期14本62.0は中立圏</li><li>直近足は「陽線」</li><li>参考：ボリンジャーバンド+2σは2,237.7円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）</li></ul>
+      
+    </div>
+    <div class="pos pos--buy">
+      <div class="pos__head">
+        <span class="pos__name">BANDAI NAMCO Holdings Inc.</span>
+        <span class="mono pos__code">7832｜輸送用機器・精密機器</span>
+      </div>
+      <div class="star-badge star-badge--compact">
+        <span class="badge badge--buy">監視</span>
+        <span class="stars"><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star">★</span></span>
+      </div>
+      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+68.5%</span></div>
+      <div class="pos__row"><span>現在値</span><span class="mono">6,077.0円（-2.35%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">6,528.0円（現在値+7.42%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">6,176.0円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">7,056.0円</span></div>
+      
+    <div class="proj">
+      <p class="proj__head">過去113回の実測（90日以内・同型シグナル）</p>
+      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">7,071円<span class="proj__pct">（+8.3%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">7,434円<span class="proj__pct">（+13.9%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">9,050円<span class="proj__pct">（+38.6%）</span></span></div>
+      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">5,832円<span class="proj__pct">（-10.7%）</span></span></div>
+      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">5,373円<span class="proj__pct">（-17.7%）</span></span></div>
+      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 6,077円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">6,009 〜 6,145円<span class="proj__pct">（±68円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">5,943 〜 6,211円<span class="proj__pct">（±134円）</span></span></div></div>
+      <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
+        そこで売らなければ利益は確定しません。</p>
+    </div>
+      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-6.47%）</p></div>
+      <ul class="conf__caveats"><li>移動平均線は完全整列前。トレンドの土台は形成途中</li><li>RSI短期9本49.2/長期14本55.8は中立圏</li><li>同業種平均を+7.3%上回る。セクター内で優位</li><li>直近足は「陰線」</li></ul>
+      
+    </div>
+    <div class="pos pos--buy">
+      <div class="pos__head">
+        <span class="pos__name">Shibusawa Logistics Corporation</span>
+        <span class="mono pos__code">9304｜運輸・情報通信・電力・サービス</span>
+      </div>
+      <div class="star-badge star-badge--compact">
+        <span class="badge badge--buy">監視</span>
+        <span class="stars"><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star">★</span><span class="star">★</span></span>
+      </div>
+      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+67.3%</span></div>
+      <div class="pos__row"><span>現在値</span><span class="mono">2,080.0円（+0.87%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">2,212.0円（現在値+6.35%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">2,107.4円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">2,368.9円</span></div>
+      
+    <div class="proj">
+      <p class="proj__head">過去371回の実測（90日以内・同型シグナル）</p>
+      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">2,569円<span class="proj__pct">（+16.1%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">2,871円<span class="proj__pct">（+29.8%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">3,225円<span class="proj__pct">（+45.8%）</span></span></div>
+      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">2,120円<span class="proj__pct">（-4.2%）</span></span></div>
+      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">1,893円<span class="proj__pct">（-14.4%）</span></span></div>
+      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 2,080円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">2,062 〜 2,098円<span class="proj__pct">（±18円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">2,043 〜 2,117円<span class="proj__pct">（±37円）</span></span></div></div>
+      <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
+        そこで売らなければ利益は確定しません。</p>
+    </div>
+      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-14.11%）</p></div>
+      <ul class="conf__caveats"><li>移動平均線は完全整列前。トレンドの土台は形成途中</li><li>RSI短期9本56.0/長期14本53.6は中立圏</li><li>直近足は「陽線」</li><li>参考：ボリンジャーバンド+2σは2,209.6円（旧版はここを利確目標にしていましたが、検証で劣ったため変更）</li></ul>
+      
+    </div>
+    <div class="pos pos--buy">
+      <div class="pos__head">
+        <span class="pos__name">Seiko Epson Corporation</span>
+        <span class="mono pos__code">6724｜機械・電気機器</span>
+      </div>
+      <div class="star-badge star-badge--compact">
+        <span class="badge badge--buy">買い</span>
+        <span class="stars"><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span><span class="star star--on">★</span></span>
+      </div>
+      <div class="pos__row pos__row--mom"><span>過去6か月の上昇率</span><span class="mono">+66.2%</span></div>
+      <div class="pos__row"><span>現在値</span><span class="mono">3,441.0円（-0.15%）</span></div><div class="pos__row"><span>エントリー目安</span><span class="mono">3,476.0円（現在値+1.02%）</span></div><div class="pos__row"><span>損切りライン</span><span class="mono">3,312.5円</span></div><div class="pos__row"><span>利確目標①</span><span class="mono">3,721.2円</span></div>
+      
+    <div class="proj">
+      <p class="proj__head">過去64回の実測（90日以内・同型シグナル）</p>
+      <div class="pos__row proj__up"><span>半数はここまで上昇</span><span class="mono">3,754円<span class="proj__pct">（+8.0%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位25%はここまで</span><span class="mono">4,314円<span class="proj__pct">（+24.1%）</span></span></div>
+      <div class="pos__row proj__up"><span>上位10%はここまで</span><span class="mono">5,231円<span class="proj__pct">（+50.5%）</span></span></div>
+      <div class="pos__row proj__dn"><span>半数はここまで下落</span><span class="mono">3,218円<span class="proj__pct">（-7.4%）</span></span></div>
+      <div class="pos__row proj__dn"><span>下位10%はここまで</span><span class="mono">2,736円<span class="proj__pct">（-21.3%）</span></span></div>
+      <div class="proj__day"><p class="proj__sub">1日の値動き（現在値 3,441円 を基準・過去500日）</p><div class="pos__row"><span>普通の日（中央値）</span><span class="mono">3,407 〜 3,475円<span class="proj__pct">（±34円）</span></span></div><div class="pos__row"><span>荒い日（上位20%）</span><span class="mono">3,366 〜 3,516円<span class="proj__pct">（±75円）</span></span></div></div>
+      <p class="proj__warn">これは予測ではなく過去の分布です。最大上昇に到達しても、
+        そこで売らなければ利益は確定しません。</p>
+    </div>
+      <div class="conf__edge conf__edge--bad"><p class="conf__edge-head">対照実験：単純保有より不利（-6.65%）</p></div>
+      <ul class="conf__caveats"><li>パーフェクトオーダー成立（株価＞5日線＞25日線＞80日線＞120日線）</li><li>RSI短期9本66.7/長期14本64.4は中立圏</li><li>同業種平均を+9.0%上回る。セクター内で優位</li><li>直近足は「陰線」</li></ul>
       
     </div></div>
     </section>
